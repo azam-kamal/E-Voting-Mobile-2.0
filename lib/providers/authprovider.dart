@@ -4,11 +4,33 @@ import '../models/auth.dart';
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 
+var voterNic;
+
 class AuthProvider with ChangeNotifier {
   List<Auth> _authItems = [];
 
   List<Auth> get items {
     return [..._authItems];
+  }
+
+  String get authNic {
+    print(voterNic);
+    if (voterNic != null) {
+      return voterNic;
+    } else {
+      return null;
+    }
+  }
+  bool get checkauthNic{
+    
+    if(voterNic!=null){
+      print('true');
+      return true;
+    }
+    else{
+      print('false');
+      return false;
+    }
   }
 
   Future<void> loginVoter(String nicNumber, String mobileNumber) async {
@@ -22,7 +44,7 @@ class AuthProvider with ChangeNotifier {
       final getVoterDataByValidatingNic = await http.get(firstUrl);
       final getVoterNumberByValidatingNumber = await http.get(secondUrl);
       final extractDataByValidatingNic =
-          json.decode(getVoterDataByValidatingNic.body) as Map<String, dynamic>;
+          json.decode(getVoterDataByValidatingNic.body);
       final extractDataByValidatingNumber =
           json.decode(getVoterNumberByValidatingNumber.body);
       var voterIdByNic;
@@ -37,16 +59,30 @@ class AuthProvider with ChangeNotifier {
           voterIdByNumber = key;
         });
       }
+      
+
       if (voterIdByNic == voterIdByNumber) {
+          print('Voter id by nic'+voterIdByNic);
+        print('voter id by number'+voterIdByNumber);
         final getVoterData = getVoterDataByValidatingNic;
         final voterData =
             await json.decode(getVoterData.body) as Map<String, dynamic>;
-        print(voterData);
+        final List<Auth> auth = [];
+        voterData.forEach((key, value) {
+          voterNic = value['VoterNicNumber'];
+          auth.add(Auth(
+              uId: key,
+              nic: value['VoterNicNumber'],
+              phoneNumber: value['VoterMobileNumber'],
+              expiryDate: DateTime.now()));
+        });
+        _authItems = auth;
         notifyListeners();
       } else {
-        print('error MisMatch');
+        throw Exception('Invalid Nic number & Mobile Number');
       }
     } catch (error) {
+      print(error);
       throw error;
     }
   }
@@ -63,8 +99,8 @@ class AuthProvider with ChangeNotifier {
       });
       print(extractNic);
       if (extractNic != null) {
-          return true;
-        }
+        return true;
+      }
     }
     return false;
   }
@@ -80,9 +116,9 @@ class AuthProvider with ChangeNotifier {
         extractNumber = value['VoterMobileNumber'];
       });
       print(extractNumber);
-      if (extractNumber!= null) {
-          return true;
-        }
+      if (extractNumber != null) {
+        return true;
+      }
     }
     return false;
   }

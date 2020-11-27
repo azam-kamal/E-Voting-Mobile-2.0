@@ -7,8 +7,8 @@ class Voter {
   final String voterMobileNumber;
   final String voterAddress;
   final String voterHalkaNumber;
-  final bool provincialAssemblyVoteCast;
-  final bool nationalAssemblyVoteCast;
+  bool provincialAssemblyVoteCast;
+  bool nationalAssemblyVoteCast;
   Voter(
       {@required this.voterId,
       @required this.voterName,

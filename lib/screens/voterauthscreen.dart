@@ -1,3 +1,4 @@
+import 'package:E_Voting_System/providers/voterprovider.dart';
 import 'package:flutter/material.dart';
 import '../models/auth.dart';
 import '../providers/authprovider.dart';
@@ -21,10 +22,45 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
         isLoading = true;
       });
       formKey.currentState.save();
-      await Provider.of<AuthProvider>(context, listen: false)
+      await Provider.of<AuthProvider>(context)
           .loginVoter(loginVoter.nic, loginVoter.phoneNumber);
+      // await Provider.of<VoterProvider>(context).fetchVoter();
+      Navigator.of(context).pop();
     } catch (error) {
-      throw error;
+      // showDialog(
+      //     context: context,
+      //     builder: (ctx) {
+      //       return AlertDialog(
+      //         content: Text('Invalid Nic number & mobile number'),
+      //         actions: <Widget>[
+      //           Container(
+      //             margin: EdgeInsets.only(top: 10),
+      //             height: 50,
+      //             decoration: BoxDecoration(
+      //               color: Colors.green[700],
+      //               border: Border.all(
+      //                   color: Colors.black,
+      //                   style: BorderStyle.solid,
+      //                   width: 2.0),
+      //               borderRadius: BorderRadius.circular(40),
+      //             ),
+      //             child: FlatButton(
+      //                 onPressed: () {
+      //                   Navigator.of(ctx).pop(false);
+      //                 },
+      //                 child: Text(
+      //                   'Okay',
+      //                   style: TextStyle(
+      //                       fontFamily: 'josefin',
+      //                       color: Colors.white,
+      //                       fontWeight: FontWeight.w700,
+      //                       fontSize: 15),
+      //                 )),
+      //           ),
+      //         ],
+      //       );
+      //     });
+      print(error);
     } finally {
       setState(() {
         isLoading = false;

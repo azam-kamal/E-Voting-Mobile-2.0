@@ -21,16 +21,21 @@ class AuthProvider with ChangeNotifier {
       return null;
     }
   }
-  bool get checkauthNic{
-    
-    if(voterNic!=null){
+
+  bool get checkauthNic {
+    if (voterNic != null) {
       print('true');
       return true;
-    }
-    else{
+    } else {
       print('false');
       return false;
     }
+  }
+
+  Future<void> logoutVoter() async {
+    voterNic = null;
+    // _authItems=[];
+    notifyListeners();
   }
 
   Future<void> loginVoter(String nicNumber, String mobileNumber) async {
@@ -59,11 +64,10 @@ class AuthProvider with ChangeNotifier {
           voterIdByNumber = key;
         });
       }
-      
 
       if (voterIdByNic == voterIdByNumber) {
-          print('Voter id by nic'+voterIdByNic);
-        print('voter id by number'+voterIdByNumber);
+        print('Voter id by nic' + voterIdByNic);
+        print('voter id by number' + voterIdByNumber);
         final getVoterData = getVoterDataByValidatingNic;
         final voterData =
             await json.decode(getVoterData.body) as Map<String, dynamic>;

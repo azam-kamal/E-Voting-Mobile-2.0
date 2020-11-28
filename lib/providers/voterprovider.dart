@@ -29,6 +29,11 @@ class VoterProvider with ChangeNotifier {
     }
   }
 
+  Future<void> logoutVoterDetail() async {
+    // _voterData = [];
+    notifyListeners();
+  }
+
   Future<void> fetchVoter() async {
     print('we get voter id' + nicNumber);
     // final url =
@@ -40,21 +45,19 @@ class VoterProvider with ChangeNotifier {
       final extractedData =
           await json.decode(responseData.body) as Map<String, dynamic>;
 
-          print(json.decode(responseData.body));
+      print(json.decode(responseData.body));
       // final List<Voter> loadData = [];
-      extractedData.forEach((key, value) { 
-        _voterData.add(
-          Voter(
+      extractedData.forEach((key, value) {
+        _voterData.add(Voter(
             voterId: key,
             voterNicNumber: value['Voter Nic Number'],
             voterName: value['Voter Name'],
             voterMobileNumber: value['Voter Mobile Number'],
             voterAddress: value['Voter Address'],
             voterHalkaNumber: value['Voter Halka Number'],
-            nationalAssemblyVoteCast:value['National Assembly Vote Cast'],
-            provincialAssemblyVoteCast: value['Provincial Assembly Vote Cast']
-            
-            ));
+            nationalAssemblyVoteCast: value['National Assembly Vote Cast'],
+            provincialAssemblyVoteCast:
+                value['Provincial Assembly Vote Cast']));
       });
       // voterData = loadData;
       notifyListeners();

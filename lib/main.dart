@@ -8,6 +8,7 @@ import './providers/voterprovider.dart';
 import './screens/voterauthscreen.dart';
 import './providers/authprovider.dart';
 import './screens/voterdetailscreen.dart';
+import './screens/otpverficationscreen.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,7 +34,8 @@ class MyApp extends StatelessWidget {
               routes: {
                 ManageVoterScreen.routeName: (ctx) => ManageVoterScreen(),
                 VoterAuthScreen.routeName: (ctx) => VoterAuthScreen(),
-                VoterDetailScreen.routeName: (ctx) => VoterDetailScreen()
+                VoterDetailScreen.routeName: (ctx) => VoterDetailScreen(),
+                OtpVerificationScreen.routeName:(ctx)=>OtpVerificationScreen()
               },
               home:authData.checkauthNic?VoterDetailScreen(): AdminControlScreen(),
             );

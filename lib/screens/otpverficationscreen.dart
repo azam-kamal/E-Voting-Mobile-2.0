@@ -44,7 +44,7 @@ class OtpVerificationScreen extends StatelessWidget {
               ),
               child: FlatButton(
                   onPressed: () {
-                    otp.sendOtp('3343648579', '1 2 3 4 5');
+                    otp.sendOtp('3456019354', '1 2 3 4 5');
                   },
                   child: Text(
                     'Send Otp',

@@ -97,7 +97,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                         margin: EdgeInsets.only(top: 5),
                         alignment: Alignment.center,
                         child: Text(
-                          'Asslam o Alaikum ',
+                          'Assalam O Alaikum ',
                           style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'satisfy',
@@ -107,7 +107,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                     Container(
                         alignment: Alignment.center,
                         child: Text(
-                          'Please Login To Cast Your Vote',
+                          'Login To Cast Your Vote',
                           style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'satisfy',
@@ -137,6 +137,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                           }
                                         },
                                         maxLength: 15,
+                                        keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                             hintText: 'NIC',
                                             hintStyle: TextStyle(fontSize: 20)),
@@ -160,6 +161,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                           }
                                         },
                                         maxLength: 11,
+                                        keyboardType: TextInputType.number,
                                         decoration: InputDecoration(
                                             hintText: 'Phone-Number',
                                             hintStyle: TextStyle(fontSize: 20)),

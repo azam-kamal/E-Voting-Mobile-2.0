@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
               create: null,
               update: null,
               builder: (ctx, authData, previousData) {
+                print('FIRST I AM HERE');
                 //  print(authData.isAuth);
                 return VoterProvider(authData.authNic);
               }),
@@ -35,9 +36,12 @@ class MyApp extends StatelessWidget {
                 ManageVoterScreen.routeName: (ctx) => ManageVoterScreen(),
                 VoterAuthScreen.routeName: (ctx) => VoterAuthScreen(),
                 VoterDetailScreen.routeName: (ctx) => VoterDetailScreen(),
-                OtpVerificationScreen.routeName:(ctx)=>OtpVerificationScreen()
+                OtpVerificationScreen.routeName: (ctx) =>
+                    OtpVerificationScreen()
               },
-              home:authData.checkauthNic?VoterDetailScreen(): AdminControlScreen(),
+              home: authData.checkauthNic
+                  ? VoterDetailScreen()
+                  : AdminControlScreen(),
             );
           },
         ));

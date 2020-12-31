@@ -30,7 +30,7 @@ class VoterProvider with ChangeNotifier {
   }
 
   Future<void> logoutVoterDetail() async {
-    // _voterData = [];
+    _voterData = [];
     notifyListeners();
   }
 
@@ -39,7 +39,7 @@ class VoterProvider with ChangeNotifier {
     // final url =
     //     'https://election-system-database.firebaseio.com/voters/$voterId.json';
     final url =
-        'https://election-system-database.firebaseio.com/voters.json?&orderBy="Voter Nic Number"&equalTo="$nicNumber"';
+        'https://election-system-database.firebaseio.com/voters.json?&orderBy="VoterNicNumber"&equalTo="$nicNumber"';
     try {
       final responseData = await http.get(url);
       final extractedData =
@@ -50,14 +50,18 @@ class VoterProvider with ChangeNotifier {
       extractedData.forEach((key, value) {
         _voterData.add(Voter(
             voterId: key,
-            voterNicNumber: value['Voter Nic Number'],
-            voterName: value['Voter Name'],
-            voterMobileNumber: value['Voter Mobile Number'],
-            voterAddress: value['Voter Address'],
-            voterHalkaNumber: value['Voter Halka Number'],
-            nationalAssemblyVoteCast: value['National Assembly Vote Cast'],
-            provincialAssemblyVoteCast:
-                value['Provincial Assembly Vote Cast']));
+            voterHalkaLocationMarkerId: value['VoterHalkaLocationMarkerId'],
+            votercityName: value['VoterCity'],
+            voterProvince: value['VoterProvince'],
+            voterNicNumber: value['VoterNicNumber'],
+            voterName: value['VoterName'],
+            voterMobileNumber: value['VoterMobileNumber'],
+            voterAddress: value['VoterAddress'],
+            voterHalkaNumber: value['VoterHalkaNumber'],
+            nationalAssemblyVoteCast: value['NationalAssemblyVoteCast'],
+            provincialAssemblyVoteCast: value['ProvincialAssemblyVoteCast'],
+            voterHalkaLocationLongitude: double.parse(value['Longitude']),
+            voterHalkaLocationLatitude: double.parse(value['Latitude'])));
       });
       // voterData = loadData;
       notifyListeners();
@@ -66,28 +70,39 @@ class VoterProvider with ChangeNotifier {
     }
   }
 
-  Future<void> registerVoter(Voter voter) async {
+  Future<void> registerVoter(
+      Voter voter, String markerID, String longitude, String latitude) async {
     const url = 'https://election-system-database.firebaseio.com/voters.json';
     try {
       final response = await http.post(url,
           body: json.encode({
-            'Voter Name': voter.voterName,
-            'Voter Nic Number': voter.voterNicNumber,
-            'Voter Mobile Number': voter.voterMobileNumber,
-            'Voter Address': voter.voterAddress,
-            'Voter Halka Number': voter.voterHalkaNumber,
-            'Provincial Assembly Vote Cast': voter.provincialAssemblyVoteCast,
-            'National Assembly Voter Cast': voter.nationalAssemblyVoteCast
+            'VoterName': voter.voterName,
+            'VoterHalkaLocationMarkerId': markerID,
+            'VoterCity': voter.votercityName,
+            'VoterProvince': voter.voterProvince,
+            'VoterNicNumber': voter.voterNicNumber,
+            'VoterMobileNumber': voter.voterMobileNumber,
+            'VoterAddress': voter.voterAddress,
+            'VoterHalkaNumber': voter.voterHalkaNumber,
+            'ProvincialAssemblyVoteCast': voter.provincialAssemblyVoteCast,
+            'NationalAssemblyVoterCast': voter.nationalAssemblyVoteCast,
+            'Longitude': longitude,
+            'Latitude': latitude
           }));
       await signupVoter(voter.voterNicNumber, voter.voterMobileNumber,
           json.decode(response.body)['name'], DateTime.now().toIso8601String());
       _voterData.add(Voter(
           voterId: json.decode(response.body)['name'],
+          voterHalkaLocationMarkerId: markerID,
+          votercityName: voter.votercityName,
+          voterProvince: voter.voterProvince,
           voterName: voter.voterName,
           voterNicNumber: voter.voterNicNumber,
           voterMobileNumber: voter.voterMobileNumber,
           voterAddress: voter.voterAddress,
-          voterHalkaNumber: voter.voterHalkaNumber));
+          voterHalkaNumber: voter.voterHalkaNumber,
+          voterHalkaLocationLongitude: double.parse(longitude),
+          voterHalkaLocationLatitude: double.parse(latitude)));
       notifyListeners();
     } catch (error) {
       throw error;

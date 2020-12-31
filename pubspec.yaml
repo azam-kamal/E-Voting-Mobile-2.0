@@ -36,6 +36,12 @@ dev_dependencies:
   intl: ^0.16.1
   http: ^0.12.2
   flutter_otp: ^0.3.2
+  google_maps_flutter: ^1.0.4
+  geolocator: ^3.0.0
+  flutter_google_places: ^0.2.6
+  geocoder: ^0.2.1
+  
+
 
 
 # For information on the generic Dart part of this file, see the

@@ -36,6 +36,10 @@ class _VoterDetailScreenState extends State<VoterDetailScreen> {
             IconButton(
               icon: Icon(Icons.logout),
               onPressed: () async {
+                init = true;
+                //We are initializing init = true because we can see that didchange dependecies functio run
+                // multiple times so we init =true after user logout init will be true but when the user login
+                // did change dependencies will not be run becase init will be false again
                 await Provider.of<AuthProvider>(context).logoutVoter();
                 await Provider.of<VoterProvider>(context).logoutVoterDetail();
                 Navigator.of(context).pushReplacementNamed('/');

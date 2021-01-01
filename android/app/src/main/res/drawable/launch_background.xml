@@ -4,18 +4,13 @@
     <item android:drawable="@android:color/white" />
 
     <!-- You can insert your own image assets here -->
-<<<<<<< HEAD
     <item
     android:width="300dp"
     android:height="300dp"
     android:gravity="center"
     >
         <bitmap
-=======
-    <item>
-        <bitmap
-            android:gravity="center"
->>>>>>> 2c4c11cef9e26842d6c19da48710b6b47c30153e
             android:src="@drawable/logo" />
     </item>
 </layer-list>
+<!-- Project 2 -->

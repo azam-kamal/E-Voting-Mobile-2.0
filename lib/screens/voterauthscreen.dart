@@ -76,7 +76,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
         body: isLoading
             ? Center(
                 child: CircularProgressIndicator(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.green,
                 ),
               )
             : SingleChildScrollView(
@@ -87,7 +87,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                       alignment: Alignment.center,
                       child: ClipOval(
                         child: Image.asset(
-                          'assets/images/Logo 1.0.jpg',
+                          'assets/images/Logo 3.0.png',
                           fit: BoxFit.cover,
                           height: 140,
                         ),
@@ -97,7 +97,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                         margin: EdgeInsets.only(top: 5),
                         alignment: Alignment.center,
                         child: Text(
-                          'Assalam O Alaikum ',
+                          'Asslam o Alaikum ',
                           style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'satisfy',
@@ -107,7 +107,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                     Container(
                         alignment: Alignment.center,
                         child: Text(
-                          'Login To Cast Your Vote',
+                          'Please Login To Cast Your Vote',
                           style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'satisfy',
@@ -121,9 +121,8 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(30),
                                 topRight: Radius.circular(30))),
-                        height: 388,
+                        height: 490,
                         child: Center(
-<<<<<<< HEAD
                             child: Column(
                           children: <Widget>[
                             Container(
@@ -190,58 +189,6 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                                     loginVoter.expiryDate);
                                           },
                                         ),
-=======
-                          child: Form(
-                              key: formKey,
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.all(20),
-                                      child: TextFormField(
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return 'Nic is null';
-                                          }
-                                        },
-                                        maxLength: 15,
-                                        keyboardType: TextInputType.number,
-                                        decoration: InputDecoration(
-                                            hintText: 'NIC',
-                                            hintStyle: TextStyle(fontSize: 20)),
-                                        onSaved: (value) {
-                                          loginVoter = Auth(
-                                              uId: loginVoter.uId,
-                                              nic: value,
-                                              phoneNumber:
-                                                  loginVoter.phoneNumber,
-                                              expiryDate:
-                                                  loginVoter.expiryDate);
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.all(20),
-                                      child: TextFormField(
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return 'Nic is null';
-                                          }
-                                        },
-                                        maxLength: 11,
-                                        keyboardType: TextInputType.number,
-                                        decoration: InputDecoration(
-                                            hintText: 'Phone-Number',
-                                            hintStyle: TextStyle(fontSize: 20)),
-                                        onSaved: (value) {
-                                          loginVoter = Auth(
-                                              uId: loginVoter.uId,
-                                              nic: loginVoter.nic,
-                                              phoneNumber: value,
-                                              expiryDate:
-                                                  loginVoter.expiryDate);
-                                        },
->>>>>>> 2c4c11cef9e26842d6c19da48710b6b47c30153e
                                       ),
                                       Container(
                                         margin: EdgeInsets.only(top: 10),

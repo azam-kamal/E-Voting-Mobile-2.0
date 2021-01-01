@@ -459,6 +459,19 @@ class _ManageVoterScreenState extends State<ManageVoterScreen> {
                                         mainAxisAlignment:
                                             MainAxisAlignment.spaceBetween,
                                         children: <Widget>[
+                                           Expanded(
+                                              child: Container(
+                                            width: 100,
+                                            child: TextField(
+                                              decoration: InputDecoration(
+                                                  labelText: 'Latitude'),
+                                              onChanged: (val) {
+                                                setState(() {
+                                                  lt = double.parse(val);
+                                                });
+                                              },
+                                            ),
+                                          )),
                                           Expanded(
                                             child: Container(
                                               width: 100,
@@ -473,19 +486,7 @@ class _ManageVoterScreenState extends State<ManageVoterScreen> {
                                               ),
                                             ),
                                           ),
-                                          Expanded(
-                                              child: Container(
-                                            width: 100,
-                                            child: TextField(
-                                              decoration: InputDecoration(
-                                                  labelText: 'Latitude'),
-                                              onChanged: (val) {
-                                                setState(() {
-                                                  lt = double.parse(val);
-                                                });
-                                              },
-                                            ),
-                                          )),
+                                         
                                         ],
                                       ),
                                     )),
@@ -625,7 +626,7 @@ class _ManageVoterScreenState extends State<ManageVoterScreen> {
                                             onPressed: () async {
                                               Geolocator()
                                                   .placemarkFromCoordinates(
-                                                      lng, lt)
+                                                      lt,lng)
                                                   .then((value) {
                                                 _controller.animateCamera(
                                                     CameraUpdate.newCameraPosition(

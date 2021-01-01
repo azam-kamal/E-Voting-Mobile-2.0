@@ -35,43 +35,34 @@ class VoterProvider with ChangeNotifier {
   }
 
   Future<void> fetchVoter() async {
-    print('we get voter id ' + nicNumber);
+    print('we get voter id' + nicNumber);
     // final url =
     //     'https://election-system-database.firebaseio.com/voters/$voterId.json';
     final url =
         'https://election-system-database.firebaseio.com/voters.json?&orderBy="VoterNicNumber"&equalTo="$nicNumber"';
     try {
       final responseData = await http.get(url);
-      final extractedData =await json.decode(responseData.body) as Map<String, dynamic>;
+      final extractedData =
+          await json.decode(responseData.body) as Map<String, dynamic>;
+
       print(json.decode(responseData.body));
-      print(extractedData);
       // final List<Voter> loadData = [];
       extractedData.forEach((key, value) {
         _voterData.add(Voter(
             voterId: key,
-<<<<<<< HEAD
             voterHalkaLocationMarkerId: value['VoterHalkaLocationMarkerId'],
             votercityName: value['VoterCity'],
             voterProvince: value['VoterProvince'],
-=======
->>>>>>> 2c4c11cef9e26842d6c19da48710b6b47c30153e
             voterNicNumber: value['VoterNicNumber'],
             voterName: value['VoterName'],
             voterMobileNumber: value['VoterMobileNumber'],
             voterAddress: value['VoterAddress'],
             voterHalkaNumber: value['VoterHalkaNumber'],
-<<<<<<< HEAD
             nationalAssemblyVoteCast: value['NationalAssemblyVoteCast'],
             provincialAssemblyVoteCast: value['ProvincialAssemblyVoteCast'],
             voterHalkaLocationLongitude: double.parse(value['Longitude']),
             voterHalkaLocationLatitude: double.parse(value['Latitude'])));
-=======
-            nationalAssemblyVoteCast: value['NationalAssemblyVoterCast'],
-            provincialAssemblyVoteCast: value['ProvincialAssemblyVoterCast']));
->>>>>>> 2c4c11cef9e26842d6c19da48710b6b47c30153e
       });
-      print("hhhhhhhhhh");
-      print(_voterData);
       // voterData = loadData;
       notifyListeners();
     } catch (error) {
@@ -86,24 +77,17 @@ class VoterProvider with ChangeNotifier {
       final response = await http.post(url,
           body: json.encode({
             'VoterName': voter.voterName,
-<<<<<<< HEAD
             'VoterHalkaLocationMarkerId': markerID,
             'VoterCity': voter.votercityName,
             'VoterProvince': voter.voterProvince,
-=======
->>>>>>> 2c4c11cef9e26842d6c19da48710b6b47c30153e
             'VoterNicNumber': voter.voterNicNumber,
             'VoterMobileNumber': voter.voterMobileNumber,
             'VoterAddress': voter.voterAddress,
             'VoterHalkaNumber': voter.voterHalkaNumber,
             'ProvincialAssemblyVoteCast': voter.provincialAssemblyVoteCast,
-<<<<<<< HEAD
             'NationalAssemblyVoterCast': voter.nationalAssemblyVoteCast,
             'Longitude': longitude,
             'Latitude': latitude
-=======
-            'NationalAssemblyVoterCast': voter.nationalAssemblyVoteCast
->>>>>>> 2c4c11cef9e26842d6c19da48710b6b47c30153e
           }));
       await signupVoter(voter.voterNicNumber, voter.voterMobileNumber,
           json.decode(response.body)['name'], DateTime.now().toIso8601String());

@@ -64,8 +64,8 @@ class _VoterDetailScreenState extends State<VoterDetailScreen> {
             : Consumer<VoterProvider>(
                 builder: (ctx, voterDetails, _) {
                   return Container(
-                    margin: EdgeInsets.all(20),
-                    height:MediaQuery.of(context).size.height,
+                    margin: EdgeInsets.all(10),
+                    height: 800,
                     alignment: Alignment.center,
                     decoration:
                         BoxDecoration(borderRadius: BorderRadius.circular(5)),
@@ -76,11 +76,19 @@ class _VoterDetailScreenState extends State<VoterDetailScreen> {
                           print(voterDetails.voterItems[index].voterName);
                           return VoterDetail(
                               voterDetails.voterItems[index].voterId,
+                              voterDetails
+                                  .voterItems[index].voterHalkaLocationMarkerId,
                               voterDetails.voterItems[index].voterName,
                               voterDetails.voterItems[index].voterNicNumber,
                               voterDetails.voterItems[index].voterMobileNumber,
                               voterDetails.voterItems[index].voterAddress,
-                              voterDetails.voterItems[index].voterHalkaNumber);
+                              voterDetails.voterItems[index].votercityName,
+                              voterDetails.voterItems[index].voterProvince,
+                              voterDetails.voterItems[index].voterHalkaNumber,
+                              voterDetails.voterItems[index]
+                                  .voterHalkaLocationLongitude,
+                              voterDetails.voterItems[index]
+                                  .voterHalkaLocationLatitude);
                         },
                         itemCount: voterDetails.voterItems.length,
                       ),

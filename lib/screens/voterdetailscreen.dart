@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/voterprovider.dart';
 import '../widgets/voterdetail.dart';
-import 'package:provider/provider.dart';
 import '../providers/authprovider.dart';
 
 class VoterDetailScreen extends StatefulWidget {
@@ -66,10 +65,10 @@ class _VoterDetailScreenState extends State<VoterDetailScreen> {
                 builder: (ctx, voterDetails, _) {
                   return Container(
                     margin: EdgeInsets.all(20),
-                    height: 520,
+                    height:MediaQuery.of(context).size.height,
                     alignment: Alignment.center,
                     decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                        BoxDecoration(borderRadius: BorderRadius.circular(5)),
                     child: Card(
                       elevation: 6,
                       child: ListView.builder(

@@ -27,7 +27,8 @@ class MyApp extends StatelessWidget {
                 print('FIRST I AM HERE');
                 //  print(authData.isAuth);
                 return VoterProvider(authData.authNic);
-              }),
+              }
+              ),
         ],
         child: Consumer<AuthProvider>(
           builder: (ctx, authData, _) {

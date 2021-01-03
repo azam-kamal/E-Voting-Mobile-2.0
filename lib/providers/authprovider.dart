@@ -34,6 +34,7 @@ class AuthProvider with ChangeNotifier {
 
   Future<void> logoutVoter() async {
     voterNic = null;
+    _authItems = [];
     // _authItems=[];
     notifyListeners();
   }

@@ -40,7 +40,7 @@ class AdminControlScreen extends StatelessWidget {
                         margin: EdgeInsets.only(bottom: 40),
                         child: ClipOval(
                           child: Image.asset(
-                            'assets/images/Logo 1.0.jpg',
+                            'assets/images/Logo 2.0.png',
                             fit: BoxFit.cover,
                             height: 140,
                           ),

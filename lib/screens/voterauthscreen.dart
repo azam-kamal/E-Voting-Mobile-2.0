@@ -76,7 +76,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
         body: isLoading
             ? Center(
                 child: CircularProgressIndicator(
-                  backgroundColor: Colors.white,
+                  backgroundColor: Colors.green,
                 ),
               )
             : SingleChildScrollView(
@@ -87,7 +87,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                       alignment: Alignment.center,
                       child: ClipOval(
                         child: Image.asset(
-                          'assets/images/Logo 1.0.jpg',
+                          'assets/images/Logo 3.0.png',
                           fit: BoxFit.cover,
                           height: 140,
                         ),
@@ -123,84 +123,103 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                 topRight: Radius.circular(30))),
                         height: 490,
                         child: Center(
-                          child: Form(
-                              key: formKey,
-                              child: SingleChildScrollView(
-                                child: Column(
-                                  children: <Widget>[
-                                    Container(
-                                      margin: EdgeInsets.all(20),
-                                      child: TextFormField(
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return 'Nic is null';
-                                          }
-                                        },
-                                        maxLength: 15,
-                                        decoration: InputDecoration(
-                                            hintText: 'NIC',
-                                            hintStyle: TextStyle(fontSize: 20)),
-                                        onSaved: (value) {
-                                          loginVoter = Auth(
-                                              uId: loginVoter.uId,
-                                              nic: value,
-                                              phoneNumber:
-                                                  loginVoter.phoneNumber,
-                                              expiryDate:
-                                                  loginVoter.expiryDate);
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.all(20),
-                                      child: TextFormField(
-                                        validator: (value) {
-                                          if (value.isEmpty) {
-                                            return 'Nic is null';
-                                          }
-                                        },
-                                        maxLength: 11,
-                                        decoration: InputDecoration(
-                                            hintText: 'Phone-Number',
-                                            hintStyle: TextStyle(fontSize: 20)),
-                                        onSaved: (value) {
-                                          loginVoter = Auth(
-                                              uId: loginVoter.uId,
-                                              nic: loginVoter.nic,
-                                              phoneNumber: value,
-                                              expiryDate:
-                                                  loginVoter.expiryDate);
-                                        },
-                                      ),
-                                    ),
-                                    Container(
-                                      margin: EdgeInsets.only(top: 10),
-                                      height: 50,
-                                      decoration: BoxDecoration(
-                                        color: Colors.green[700],
-                                        border: Border.all(
-                                            color: Colors.black,
-                                            style: BorderStyle.solid,
-                                            width: 2.0),
-                                        borderRadius: BorderRadius.circular(40),
-                                      ),
-                                      child: FlatButton(
-                                          onPressed: () {
-                                            saveForm();
+                            child: Column(
+                          children: <Widget>[
+                            Container(
+                              alignment: Alignment.topLeft,
+                              // color: Colors.green,
+                              margin: EdgeInsets.symmetric(vertical: 30),
+                              child: IconButton(
+                                  color: Colors.green,
+                                  icon: Icon(Icons.arrow_back),
+                                  onPressed: () {
+                                    Navigator.of(context).pop('/');
+                                  }),
+                            ),
+                            Form(
+                                key: formKey,
+                                child: SingleChildScrollView(
+                                  child: Column(
+                                    children: <Widget>[
+                                      Container(
+                                        margin: EdgeInsets.all(20),
+                                        child: TextFormField(
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return 'Nic is null';
+                                            }
+                                            return value;
                                           },
-                                          child: Text(
-                                            'Login',
-                                            style: TextStyle(
-                                                fontFamily: 'josefin',
-                                                color: Colors.white,
-                                                fontWeight: FontWeight.w700,
-                                                fontSize: 15),
-                                          )),
-                                    ),
-                                  ],
-                                ),
-                              )),
-                        )),
+                                          maxLength: 15,
+                                          decoration: InputDecoration(
+                                              hintText: 'NIC',
+                                              hintStyle:
+                                                  TextStyle(fontSize: 20)),
+                                          onSaved: (value) {
+                                            loginVoter = Auth(
+                                                uId: loginVoter.uId,
+                                                nic: value,
+                                                phoneNumber:
+                                                    loginVoter.phoneNumber,
+                                                expiryDate:
+                                                    loginVoter.expiryDate);
+                                          },
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.all(20),
+                                        child: TextFormField(
+                                          validator: (value) {
+                                            if (value.isEmpty) {
+                                              return 'Nic is null';
+                                            }
+                                            return value;
+                                          },
+                                          maxLength: 11,
+                                          decoration: InputDecoration(
+                                              hintText: 'Phone-Number',
+                                              hintStyle:
+                                                  TextStyle(fontSize: 20)),
+                                          onSaved: (value) {
+                                            loginVoter = Auth(
+                                                uId: loginVoter.uId,
+                                                nic: loginVoter.nic,
+                                                phoneNumber: value,
+                                                expiryDate:
+                                                    loginVoter.expiryDate);
+                                          },
+                                        ),
+                                      ),
+                                      Container(
+                                        margin: EdgeInsets.only(top: 10),
+                                        height: 50,
+                                        decoration: BoxDecoration(
+                                          color: Colors.green[700],
+                                          border: Border.all(
+                                              color: Colors.black,
+                                              style: BorderStyle.solid,
+                                              width: 2.0),
+                                          borderRadius:
+                                              BorderRadius.circular(40),
+                                        ),
+                                        child: FlatButton(
+                                            onPressed: () {
+                                              saveForm();
+                                            },
+                                            child: Text(
+                                              'Login',
+                                              style: TextStyle(
+                                                  fontFamily: 'josefin',
+                                                  color: Colors.white,
+                                                  fontWeight: FontWeight.w700,
+                                                  fontSize: 15),
+                                            )),
+                                      ),
+                                    ],
+                                  ),
+                                )),
+                          ],
+                        ))),
                   ],
                 ),
               ));

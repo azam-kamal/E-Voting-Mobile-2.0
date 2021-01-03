@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../providers/voterprovider.dart';
 import '../widgets/voterdetail.dart';
-import 'package:provider/provider.dart';
 import '../providers/authprovider.dart';
 
 class VoterDetailScreen extends StatefulWidget {
@@ -36,6 +35,10 @@ class _VoterDetailScreenState extends State<VoterDetailScreen> {
             IconButton(
               icon: Icon(Icons.logout),
               onPressed: () async {
+                init = true;
+                //We are initializing init = true because we can see that didchange dependecies functio run
+                // multiple times so we init =true after user logout init will be true but when the user login
+                // did change dependencies will not be run becase init will be false again
                 await Provider.of<AuthProvider>(context).logoutVoter();
                 await Provider.of<VoterProvider>(context).logoutVoterDetail();
                 Navigator.of(context).pushReplacementNamed('/');
@@ -61,11 +64,11 @@ class _VoterDetailScreenState extends State<VoterDetailScreen> {
             : Consumer<VoterProvider>(
                 builder: (ctx, voterDetails, _) {
                   return Container(
-                    margin: EdgeInsets.all(20),
-                    height: 520,
+                    margin: EdgeInsets.all(10),
+                    height: 800,
                     alignment: Alignment.center,
                     decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(15)),
+                        BoxDecoration(borderRadius: BorderRadius.circular(5)),
                     child: Card(
                       elevation: 6,
                       child: ListView.builder(
@@ -73,11 +76,19 @@ class _VoterDetailScreenState extends State<VoterDetailScreen> {
                           print(voterDetails.voterItems[index].voterName);
                           return VoterDetail(
                               voterDetails.voterItems[index].voterId,
+                              voterDetails
+                                  .voterItems[index].voterHalkaLocationMarkerId,
                               voterDetails.voterItems[index].voterName,
                               voterDetails.voterItems[index].voterNicNumber,
                               voterDetails.voterItems[index].voterMobileNumber,
                               voterDetails.voterItems[index].voterAddress,
-                              voterDetails.voterItems[index].voterHalkaNumber);
+                              voterDetails.voterItems[index].votercityName,
+                              voterDetails.voterItems[index].voterProvince,
+                              voterDetails.voterItems[index].voterHalkaNumber,
+                              voterDetails.voterItems[index]
+                                  .voterHalkaLocationLongitude,
+                              voterDetails.voterItems[index]
+                                  .voterHalkaLocationLatitude);
                         },
                         itemCount: voterDetails.voterItems.length,
                       ),

@@ -31,13 +31,17 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
           context: context,
           builder: (ctx) {
             return AlertDialog(
-              content: Text('Invalid Nic number & mobile number'),
+              content: Container(
+                  //height: MediaQuery.of(ctx).size.height*0.02,
+                  //width: MediaQuery.of(ctx).size.width*1,
+                child: Text('Invalid CNIC Or Mobile number')),
               actions: <Widget>[
                 Container(
-                  margin: EdgeInsets.only(top: 10),
-                  height: 50,
+                  margin: EdgeInsets.only(top: 1),
+                  height: 40,
+                  width: 80,
                   decoration: BoxDecoration(
-                    color: Colors.green[700],
+                    color: Color.fromRGBO(24, 44, 37, 1),
                     border: Border.all(
                         color: Colors.black,
                         style: BorderStyle.solid,
@@ -49,9 +53,9 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                         Navigator.of(ctx).pop(false);
                       },
                       child: Text(
-                        'Okay',
+                        'OK',
                         style: TextStyle(
-                            fontFamily: 'josefin',
+                            //fontFamily: 'josefin',
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                             fontSize: 15),

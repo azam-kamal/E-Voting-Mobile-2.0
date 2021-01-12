@@ -71,19 +71,21 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
 
   @override
   Widget build(BuildContext context) {
+    var mediaquery = MediaQuery.of(context);
     return Scaffold(
-        backgroundColor: isLoading ? Colors.white : Colors.green[700],
+        backgroundColor:
+            isLoading ? Colors.white : Color.fromRGBO(24, 44, 37, 1),
         body: isLoading
             ? Center(
                 child: CircularProgressIndicator(
-                  backgroundColor: Colors.green,
+                  backgroundColor: Color.fromRGBO(24, 44, 37, 1),
                 ),
               )
             : SingleChildScrollView(
                 child: Column(
                   children: <Widget>[
                     Container(
-                      margin: EdgeInsets.only(top: 60),
+                      margin: EdgeInsets.only(top: 40),
                       alignment: Alignment.center,
                       child: ClipOval(
                         child: Image.asset(
@@ -97,22 +99,22 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                         margin: EdgeInsets.only(top: 5),
                         alignment: Alignment.center,
                         child: Text(
-                          'Asslam o Alaikum ',
+                          'السلام عليكم',
                           style: TextStyle(
                               color: Colors.white,
                               fontFamily: 'satisfy',
                               fontWeight: FontWeight.w400,
-                              fontSize: 25),
+                              fontSize: 30),
                         )),
                     Container(
                         alignment: Alignment.center,
                         child: Text(
-                          'Please Login To Cast Your Vote',
+                          'Please Login to Vote',
                           style: TextStyle(
                               color: Colors.white,
-                              fontFamily: 'satisfy',
+                              //fontFamily: 'satisfy',
                               fontWeight: FontWeight.w400,
-                              fontSize: 25),
+                              fontSize: 22),
                         )),
                     Container(
                         margin: EdgeInsets.only(top: 20),
@@ -121,16 +123,17 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                             borderRadius: BorderRadius.only(
                                 topLeft: Radius.circular(30),
                                 topRight: Radius.circular(30))),
-                        height: 490,
+                        //height: 490,
+                        height: mediaquery.size.height *0.6,
                         child: Center(
                             child: Column(
                           children: <Widget>[
                             Container(
                               alignment: Alignment.topLeft,
                               // color: Colors.green,
-                              margin: EdgeInsets.symmetric(vertical: 30),
+                              margin: EdgeInsets.symmetric(vertical: 18),
                               child: IconButton(
-                                  color: Colors.green,
+                                  color: Color.fromRGBO(24, 44, 37, 1),
                                   icon: Icon(Icons.arrow_back),
                                   onPressed: () {
                                     Navigator.of(context).pop('/');
@@ -142,7 +145,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                   child: Column(
                                     children: <Widget>[
                                       Container(
-                                        margin: EdgeInsets.all(20),
+                                        margin: EdgeInsets.all(10),
                                         child: TextFormField(
                                           validator: (value) {
                                             if (value.isEmpty) {
@@ -151,8 +154,9 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                             return value;
                                           },
                                           maxLength: 15,
+                                          keyboardType: TextInputType.phone,
                                           decoration: InputDecoration(
-                                              hintText: 'NIC',
+                                              hintText: 'Enter Your CNIC',
                                               hintStyle:
                                                   TextStyle(fontSize: 20)),
                                           onSaved: (value) {
@@ -167,7 +171,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                         ),
                                       ),
                                       Container(
-                                        margin: EdgeInsets.all(20),
+                                        margin: EdgeInsets.all(10),
                                         child: TextFormField(
                                           validator: (value) {
                                             if (value.isEmpty) {
@@ -176,8 +180,9 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                             return value;
                                           },
                                           maxLength: 11,
+                                          keyboardType: TextInputType.phone,
                                           decoration: InputDecoration(
-                                              hintText: 'Phone-Number',
+                                              hintText: 'Enter Your Mobile Number',
                                               hintStyle:
                                                   TextStyle(fontSize: 20)),
                                           onSaved: (value) {
@@ -194,7 +199,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                         margin: EdgeInsets.only(top: 10),
                                         height: 50,
                                         decoration: BoxDecoration(
-                                          color: Colors.green[700],
+                                          color: Color.fromRGBO(24, 44, 37, 1),
                                           border: Border.all(
                                               color: Colors.black,
                                               style: BorderStyle.solid,
@@ -207,7 +212,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                               saveForm();
                                             },
                                             child: Text(
-                                              'Login',
+                                              'login',
                                               style: TextStyle(
                                                   fontFamily: 'josefin',
                                                   color: Colors.white,

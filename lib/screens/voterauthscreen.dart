@@ -13,6 +13,9 @@ class VoterAuthScreen extends StatefulWidget {
 bool isLoading = false;
 
 class _VoterAuthScreenState extends State<VoterAuthScreen> {
+  final cnicController = TextEditingController();
+  final mobController = TextEditingController();
+
   var loginVoter =
       Auth(uId: null, nic: null, phoneNumber: null, expiryDate: null);
   final formKey = GlobalKey<FormState>();
@@ -34,7 +37,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
               content: Container(
                   //height: MediaQuery.of(ctx).size.height*0.02,
                   //width: MediaQuery.of(ctx).size.width*1,
-                child: Text('Invalid CNIC Or Mobile number')),
+                  child: Text('Invalid CNIC Or Mobile number')),
               actions: <Widget>[
                 Container(
                   margin: EdgeInsets.only(top: 1),
@@ -71,6 +74,13 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
       });
     }
     // Navigator.of(context).pop();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    cnicController.dispose();
+    mobController.dispose();
   }
 
   @override
@@ -128,7 +138,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                 topLeft: Radius.circular(30),
                                 topRight: Radius.circular(30))),
                         //height: 490,
-                        height: mediaquery.size.height *0.6,
+                        height: mediaquery.size.height * 0.6,
                         child: Center(
                             child: Column(
                           children: <Widget>[
@@ -151,13 +161,46 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                       Container(
                                         margin: EdgeInsets.all(10),
                                         child: TextFormField(
+                                          controller: cnicController,
                                           validator: (value) {
                                             if (value.isEmpty) {
-                                              return 'Nic is null';
+                                              return 'CNIC is Empty';
                                             }
+                                            
                                             return value;
                                           },
                                           maxLength: 15,
+                                          onChanged: (val) {
+                                            if (val.length == 5) {
+                                              var txt = val + '-';
+                                              cnicController.text = txt;
+                                              setState(() {
+                                                cnicController.selection =
+                                                    TextSelection.fromPosition(
+                                                        TextPosition(
+                                                            offset:
+                                                                cnicController
+                                                                    .text
+                                                                    .length));
+                                              });
+
+                                              //setState(() {});
+                                            }
+                                            if (val.length == 13) {
+                                              
+                                              var txt2 = val + '-';
+                                              cnicController.text = txt2;
+                                              setState(() {
+                                                cnicController.selection =
+                                                    TextSelection.fromPosition(
+                                                        TextPosition(
+                                                            offset:
+                                                                cnicController
+                                                                    .text
+                                                                    .length));
+                                              });
+                                            }
+                                          },
                                           keyboardType: TextInputType.phone,
                                           decoration: InputDecoration(
                                               hintText: 'Enter Your CNIC',
@@ -179,16 +222,35 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                         child: TextFormField(
                                           validator: (value) {
                                             if (value.isEmpty) {
-                                              return 'Nic is null';
+                                              return 'Please Enter Mobile Number';
                                             }
                                             return value;
                                           },
-                                          maxLength: 11,
+                                          maxLength: 12,
+                                          controller: mobController,
                                           keyboardType: TextInputType.phone,
                                           decoration: InputDecoration(
-                                              hintText: 'Enter Your Mobile Number',
+                                              hintText:
+                                                  'Enter Your Mobile Number',
                                               hintStyle:
                                                   TextStyle(fontSize: 20)),
+                                          onChanged: (val){
+                                            if (val.length == 4) {
+                                              
+                                              var txt3 = val + '-';
+                                              mobController.text = txt3;
+                                              setState(() {
+                                                mobController.selection =
+                                                    TextSelection.fromPosition(
+                                                        TextPosition(
+                                                            offset:
+                                                                mobController
+                                                                    .text
+                                                                    .length));
+                                              });
+                                            }
+                                          },
+                                          
                                           onSaved: (value) {
                                             loginVoter = Auth(
                                                 uId: loginVoter.uId,

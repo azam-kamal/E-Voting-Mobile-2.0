@@ -14,11 +14,11 @@ class OtpVerificationScreen extends StatelessWidget {
           'OTP Verfication',
           style: TextStyle(
               color: Colors.white,
-              fontFamily: 'satisfy',
+              //fontFamily: 'satisfy',
               fontWeight: FontWeight.w400,
               fontSize: 25),
         ),
-        backgroundColor: Colors.green[700],
+        backgroundColor: Color.fromRGBO(24, 44, 37, 1),
       ),
       body: Center(
           child: Container(
@@ -30,7 +30,7 @@ class OtpVerificationScreen extends StatelessWidget {
                 child: Image.asset(
                   'assets/images/otplogo.jpg',
                   fit: BoxFit.cover,
-                  height: 140,
+                  height: 200,
                 ),
               ),
             ),
@@ -38,7 +38,7 @@ class OtpVerificationScreen extends StatelessWidget {
               margin: EdgeInsets.only(top: 10),
               height: 50,
               decoration: BoxDecoration(
-                color: Colors.green[700],
+                color: Color.fromRGBO(24, 44, 37, 1),
                 border: Border.all(style: BorderStyle.solid, width: 2.0),
                 borderRadius: BorderRadius.circular(40),
               ),
@@ -47,9 +47,9 @@ class OtpVerificationScreen extends StatelessWidget {
                     otp.sendOtp('3456019354', '1 2 3 4 5');
                   },
                   child: Text(
-                    'Send Otp',
+                    'Send OTP',
                     style: TextStyle(
-                        fontFamily: 'josefin',
+                        //fontFamily: 'josefin',
                         fontWeight: FontWeight.w700,
                         color: Colors.white,
                         fontSize: 15),

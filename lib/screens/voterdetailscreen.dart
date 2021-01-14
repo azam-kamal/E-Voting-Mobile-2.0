@@ -49,28 +49,28 @@ class _VoterDetailScreenState extends State<VoterDetailScreen> {
             'Voter Detail',
             style: TextStyle(
                 color: Colors.white,
-                fontFamily: 'satisfy',
+                //fontFamily: 'satisfy',
                 fontWeight: FontWeight.w400,
                 fontSize: 25),
           ),
-          backgroundColor: Colors.green[700],
+          backgroundColor: Color.fromRGBO(24, 44, 37, 1),
         ),
         body: isLoading
             ? Center(
                 child: CircularProgressIndicator(
-                  backgroundColor: Colors.green[700],
+                  backgroundColor: Color.fromRGBO(24, 44, 37, 1),
                 ),
               )
             : Consumer<VoterProvider>(
                 builder: (ctx, voterDetails, _) {
                   return Container(
-                    margin: EdgeInsets.all(10),
-                    height: 800,
-                    alignment: Alignment.center,
+                    margin: EdgeInsets.all(5),
+                    //height: 800,
+                    //alignment: Alignment.center,
                     decoration:
-                        BoxDecoration(borderRadius: BorderRadius.circular(5)),
+                        BoxDecoration(borderRadius: BorderRadius.circular(2)),
                     child: Card(
-                      elevation: 6,
+                      elevation: 3,
                       child: ListView.builder(
                         itemBuilder: (ctx, index) {
                           print(voterDetails.voterItems[index].voterName);

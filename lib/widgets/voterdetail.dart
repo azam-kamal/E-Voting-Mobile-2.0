@@ -69,55 +69,57 @@ class _VoterDetailState extends State<VoterDetail> {
           margin: EdgeInsets.only(bottom: 20),
           child: ClipOval(
             child: Image.asset(
-              'assets/images/Logo 2.0.png',
+              'assets/images/Logo 1.0.png',
               fit: BoxFit.cover,
               height: 140,
             ),
           ),
         ),
         Container(
-          margin: EdgeInsets.only(bottom: 10, top: 10),
+          margin: EdgeInsets.only(top: 2),
           child: Card(
-              elevation: 6,
+              elevation: 3,
               child: Row(
                 children: <Widget>[
-                  Expanded(
+                  Padding(
+                    padding: EdgeInsets.only(right: 20,left: 6),
                     child: Icon(
                       Icons.account_circle,
                       size: 30,
-                      color: Colors.green[700],
+                      color: Color.fromRGBO(24, 44, 37, 1),
                     ),
                   ),
-                  Expanded(
+                  Container(
                       child: Text(widget.name,
                           style: TextStyle(
-                            fontFamily: 'josefin',
+                            //fontFamily: 'josefin',
                             fontWeight: FontWeight.w700,
-                            color: Colors.green[700],
+                            color: Color.fromRGBO(24, 44, 37, 1),
                             fontSize: 20,
                           ))),
                 ],
               )),
         ),
         Container(
-          margin: EdgeInsets.only(bottom: 10, top: 10),
+          margin: EdgeInsets.only(top: 2),
           child: Card(
-            elevation: 6,
+            elevation: 3,
             child: Row(
               children: <Widget>[
-                Expanded(
+                Padding(
+                    padding: EdgeInsets.only(right: 20,left: 6),
                   child: Icon(
                     Icons.call,
                     size: 30,
-                    color: Colors.green[700],
+                    color: Color.fromRGBO(24, 44, 37, 1),
                   ),
                 ),
                 Expanded(
                     child: Text(widget.mobileNumber,
                         style: TextStyle(
-                          fontFamily: 'josefin',
+                          //fontFamily: 'josefin',
                           fontWeight: FontWeight.w700,
-                          color: Colors.green[700],
+                          color: Color.fromRGBO(24, 44, 37, 1),
                           fontSize: 20,
                         )))
               ],
@@ -125,24 +127,25 @@ class _VoterDetailState extends State<VoterDetail> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(bottom: 10, top: 10),
+          margin: EdgeInsets.only(top: 2),
           child: Card(
-            elevation: 6,
+            elevation: 3,
             child: Row(
               children: <Widget>[
-                Expanded(
+                Padding(
+                    padding: EdgeInsets.only(right: 20,left: 6),
                   child: Icon(
                     Icons.beenhere,
                     size: 30,
-                    color: Colors.green[700],
+                    color: Color.fromRGBO(24, 44, 37, 1),
                   ),
                 ),
                 Expanded(
                     child: Text(widget.nicNumber,
                         style: TextStyle(
-                          fontFamily: 'josefin',
+                          //fontFamily: 'josefin',
                           fontWeight: FontWeight.w700,
-                          color: Colors.green[700],
+                          color: Color.fromRGBO(24, 44, 37, 1),
                           fontSize: 20,
                         )))
               ],
@@ -150,24 +153,25 @@ class _VoterDetailState extends State<VoterDetail> {
           ),
         ),
         Container(
-          margin: EdgeInsets.only(bottom: 10, top: 10),
+          margin: EdgeInsets.only(top: 2),
           child: Card(
-            elevation: 6,
+            elevation: 3,
             child: Row(
               children: <Widget>[
-                Expanded(
+                Padding(
+                    padding: EdgeInsets.only(right: 20,left: 6),
                   child: Icon(
                     Icons.home,
                     size: 30,
-                    color: Colors.green[700],
+                    color: Color.fromRGBO(24, 44, 37, 1),
                   ),
                 ),
                 Expanded(
                     child: Text(widget.address,
                         style: TextStyle(
-                          fontFamily: 'josefin',
+                          //fontFamily: 'josefin',
                           fontWeight: FontWeight.w700,
-                          color: Colors.green[700],
+                          color: Color.fromRGBO(24, 44, 37, 1),
                           fontSize: 20,
                         ))),
               ],
@@ -175,29 +179,60 @@ class _VoterDetailState extends State<VoterDetail> {
           ),
         ),
         Container(
-            margin: EdgeInsets.only(bottom: 10, top: 10),
+            margin: EdgeInsets.only(top: 2),
             child: Card(
-              elevation: 6,
+              elevation: 3,
               child: Row(
                 children: <Widget>[
-                  Expanded(
+                  Padding(
+                    padding: EdgeInsets.only(right: 20,left: 6),
                     child: Icon(
                       Icons.how_to_vote,
                       size: 30,
-                      color: Colors.green[700],
+                      color: Color.fromRGBO(24, 44, 37, 1),
                     ),
                   ),
                   Expanded(
                       child: Text(widget.halkaNumber,
                           style: TextStyle(
-                            fontFamily: 'josefin',
+                            //fontFamily: 'josefin',
                             fontWeight: FontWeight.w700,
-                            color: Colors.green[700],
+                            color: Color.fromRGBO(24, 44, 37, 1),
                             fontSize: 20,
                           )))
                 ],
               ),
             )),
+
+/////
+///
+Container(
+            margin: EdgeInsets.only(top: 2),
+            child: Card(
+              elevation: 3,
+              child: Row(
+                children: <Widget>[
+                  Padding(
+                    padding: EdgeInsets.only(right: 20,left: 6),
+                    child: Icon(
+                      Icons.location_on,
+                      size: 30,
+                      color: Color.fromRGBO(24, 44, 37, 1),
+                    ),
+                  ),
+                  Expanded(
+                      child: Text("You can see your Polling Station marked on Map",
+                          style: TextStyle(
+                            //fontFamily: 'josefin',
+                            fontWeight: FontWeight.w700,
+                            color: Color.fromRGBO(65, 91, 85, 1),
+                            fontSize: 15,
+                          )))
+                ],
+              ),
+            )),
+
+
         Container(
           height: 300,
           child: ClipRRect(
@@ -212,10 +247,10 @@ class _VoterDetailState extends State<VoterDetail> {
           )),
         ),
         Container(
-          margin: EdgeInsets.only(top: 10),
+          margin: EdgeInsets.only(top: 10,bottom: 20,left: 6,right: 6),
           height: 50,
           decoration: BoxDecoration(
-            color: Colors.green[700],
+            color: Color.fromRGBO(24, 44, 37, 1),
             border: Border.all(style: BorderStyle.solid, width: 2.0),
             borderRadius: BorderRadius.circular(40),
           ),
@@ -227,7 +262,7 @@ class _VoterDetailState extends State<VoterDetail> {
               child: Text(
                 'Next',
                 style: TextStyle(
-                    fontFamily: 'josefin',
+                    //fontFamily: 'josefin',
                     fontWeight: FontWeight.w700,
                     color: Colors.white,
                     fontSize: 15),

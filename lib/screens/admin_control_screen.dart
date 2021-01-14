@@ -15,16 +15,16 @@ class AdminControlScreen extends StatelessWidget {
                 onPressed: () =>
                     Navigator.of(context).pushNamed(VoterAuthScreen.routeName))
           ],
-          centerTitle: true,
+          //centerTitle: true,
           title: Text(
             'Managing Voter & Candidate',
             style: TextStyle(
                 color: Colors.white,
-                fontFamily: 'satisfy',
+                //fontFamily: 'satisfy',
                 fontWeight: FontWeight.w400,
-                fontSize: 25),
+                fontSize: 19),
           ),
-          backgroundColor: Colors.green[700],
+          backgroundColor: Color.fromRGBO(24, 44, 37, 1),
         ),
         body: Center(
           child: Container(
@@ -33,16 +33,16 @@ class AdminControlScreen extends StatelessWidget {
                   color: Colors.white, borderRadius: BorderRadius.circular(15)),
               height: 350,
               child: Card(
-                  elevation: 6,
+                  elevation: 3,
                   child: Column(
                     children: <Widget>[
                       Container(
                         margin: EdgeInsets.only(bottom: 40),
                         child: ClipOval(
                           child: Image.asset(
-                            'assets/images/Logo 2.0.png',
+                            'assets/images/Logo 1.0.png',
                             fit: BoxFit.cover,
-                            height: 140,
+                            height: 160,
                           ),
                         ),
                       ),
@@ -52,7 +52,7 @@ class AdminControlScreen extends StatelessWidget {
                           Container(
                             height: 50,
                             decoration: BoxDecoration(
-                              color: Colors.green[700],
+                              color: Color.fromRGBO(24, 44, 37, 1),
                               border: Border.all(
                                   color: Colors.black,
                                   style: BorderStyle.solid,
@@ -67,7 +67,7 @@ class AdminControlScreen extends StatelessWidget {
                                 child: Text(
                                   'Manage Voters',
                                   style: TextStyle(
-                                      fontFamily: 'josefin',
+                                      //fontFamily: 'josefin',
                                       fontWeight: FontWeight.w700,
                                       color: Colors.white,
                                       fontSize: 15),
@@ -76,7 +76,7 @@ class AdminControlScreen extends StatelessWidget {
                           Container(
                             height: 50,
                             decoration: BoxDecoration(
-                              color: Colors.green[700],
+                              color: Color.fromRGBO(24, 44, 37, 1),
                               border: Border.all(
                                   color: Colors.black,
                                   style: BorderStyle.solid,
@@ -88,7 +88,7 @@ class AdminControlScreen extends StatelessWidget {
                                 child: Text(
                                   'Manage Candidates',
                                   style: TextStyle(
-                                      fontFamily: 'josefin',
+                                      //fontFamily: 'josefin',
                                       color: Colors.white,
                                       fontWeight: FontWeight.w700,
                                       fontSize: 15),

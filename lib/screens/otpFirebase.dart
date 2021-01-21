@@ -45,6 +45,7 @@ class _OtpFirebaseScreenState extends State<OtpFirebaseScreen> {
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
                         TextField(
+                          keyboardType: TextInputType.number,
                           controller: _codeController,
                         ),
                       ],

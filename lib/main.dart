@@ -1,14 +1,9 @@
-import 'package:E_Voting_System/providers/authprovider.dart';
-import 'package:E_Voting_System/widgets/voterdetail.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import './screens/admin_control_screen.dart';
-import './screens/manage_voter_screen.dart';
-import './providers/voterprovider.dart';
 import './screens/voterauthscreen.dart';
-import './providers/authprovider.dart';
 import './screens/voterdetailscreen.dart';
-import './screens/otpverficationscreen.dart';
+import './screens/otpFirebase.dart';
+import './providers/voterprovider.dart';
 
 void main() {
   runApp(MyApp());
@@ -19,32 +14,15 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiProvider(
         providers: [
-          ChangeNotifierProvider.value(value: AuthProvider()),
-          ChangeNotifierProxyProvider<AuthProvider, VoterProvider>(
-              create: null,
-              update: null,
-              builder: (ctx, authData, previousData) {
-                print('FIRST I AM HERE');
-                //  print(authData.isAuth);
-                return VoterProvider(authData.authNic);
-              }
-              ),
+          ChangeNotifierProvider.value(value: VoterProvider()),
         ],
-        child: Consumer<AuthProvider>(
-          builder: (ctx, authData, _) {
-            return MaterialApp(
-              routes: {
-                ManageVoterScreen.routeName: (ctx) => ManageVoterScreen(),
-                VoterAuthScreen.routeName: (ctx) => VoterAuthScreen(),
-                VoterDetailScreen.routeName: (ctx) => VoterDetailScreen(),
-                OtpVerificationScreen.routeName: (ctx) =>
-                    OtpVerificationScreen()
-              },
-              home: authData.checkauthNic
-                  ? VoterDetailScreen()
-                  : AdminControlScreen(),
-            );
+        child: MaterialApp(
+          routes: {
+            VoterAuthScreen.routeName: (ctx) => VoterAuthScreen(),
+            VoterDetailScreen.routeName: (ctx) => VoterDetailScreen(),
+            OtpFirebaseScreen.routeName: (ctx) => OtpFirebaseScreen()
           },
+          home: VoterAuthScreen(),
         ));
   }
 }

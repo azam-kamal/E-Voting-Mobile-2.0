@@ -1,7 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 class Voter {
-  final String voterId;
+  final int voterId;
   final String voterHalkaLocationMarkerId;
   final String voterName;
   final String voterNicNumber;

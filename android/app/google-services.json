@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "212224550216",
+    "firebase_url": "https://election-system-database.firebaseio.com",
+    "project_id": "election-system-database",
+    "storage_bucket": "election-system-database.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:212224550216:android:8d3f4d9af99bdda331bf7d",
+        "android_client_info": {
+          "package_name": "com.example.E_Voting_System"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "212224550216-4oo2ihs415agl11vidrljqukeeearqe2.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.E_Voting_System",
+            "certificate_hash": "f92a88262545204ca59db80d60e851a9803a696b"
+          }
+        },
+        {
+          "client_id": "212224550216-afmbk67mus33inn7enibm670j56ec8f2.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCNnMlyCpQPV8H60nGAyh-mwoCSPHvLoLw"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "212224550216-afmbk67mus33inn7enibm670j56ec8f2.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

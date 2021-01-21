@@ -1,12 +1,12 @@
+import '../screens/voterdetailscreen.dart';
 import 'package:flutter/material.dart';
-import '../screens/otpverficationscreen.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 import 'package:geolocator/geolocator.dart';
 import 'package:geocoder/geocoder.dart';
 
 class VoterDetail extends StatefulWidget {
-  final String id;
-  final String markerId;
+  final int id;
+  
 
   final String name;
   final String nicNumber;
@@ -19,7 +19,6 @@ class VoterDetail extends StatefulWidget {
   final double latitude;
   VoterDetail(
       this.id,
-      this.markerId,
       this.name,
       this.nicNumber,
       this.mobileNumber,
@@ -51,7 +50,7 @@ class _VoterDetailState extends State<VoterDetail> {
           infoWindow: InfoWindow(title: widget.address),
           icon:
               BitmapDescriptor.defaultMarkerWithHue(BitmapDescriptor.hueGreen),
-          markerId: MarkerId(widget.markerId),
+          markerId: MarkerId('M1'),
           position: LatLng(widget.latitude, widget.longitude)));
     }
     init=false;
@@ -257,7 +256,7 @@ Container(
           child: FlatButton(
               onPressed: () {
                 Navigator.of(context)
-                    .pushNamed(OtpVerificationScreen.routeName);
+                    .pushNamed(VoterDetailScreen.routeName);
               },
               child: Text(
                 'Next',

@@ -40,7 +40,7 @@ class _OtpFirebaseScreenState extends State<OtpFirebaseScreen> {
               context: context,
               barrierDismissible: false,
               builder: (context) => AlertDialog(
-                    title: Text("Enter OTP Code Sent to Your Mobile"),
+                    title: Text("Enter the Code Sent to Your Mobile",style: TextStyle(fontSize: 16),),
                     content: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: <Widget>[
@@ -109,6 +109,7 @@ class _OtpFirebaseScreenState extends State<OtpFirebaseScreen> {
       body: Center(
           child: Container(
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: <Widget>[
             Container(
               margin: EdgeInsets.only(bottom: 40),
@@ -120,7 +121,7 @@ class _OtpFirebaseScreenState extends State<OtpFirebaseScreen> {
                 ),
               ),
             ),
-            Center(
+            Container(
                 child: Column(
                   children: <Widget>[
                     Row(mainAxisAlignment: MainAxisAlignment.center,
@@ -134,8 +135,9 @@ class _OtpFirebaseScreenState extends State<OtpFirebaseScreen> {
                     Text(' Number right now registered with E Voting',style: TextStyle(fontSize: 16))
                   ],
                 )),
+            Container(),
             Container(
-              margin: EdgeInsets.only(top: 30),
+              margin: EdgeInsets.only(bottom:20),
               height: 50,
               decoration: BoxDecoration(
                 color: Color.fromRGBO(24, 44, 37, 1),

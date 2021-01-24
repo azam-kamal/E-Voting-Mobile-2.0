@@ -12,17 +12,29 @@ class VoterAuthScreen extends StatefulWidget {
 bool isLoading = false;
 
 class _VoterAuthScreenState extends State<VoterAuthScreen> {
-  final cnicController = TextEditingController();
-  final mobController = TextEditingController();
+  final cnicController1 = TextEditingController();
+  final cnicController2 = TextEditingController();
+  final cnicController3 = TextEditingController();
+  final mobController1 = TextEditingController();
+  final mobController2 = TextEditingController();
+  var cnicFocus1 = FocusNode();
+  var cnicFocus2 = FocusNode();
+  var cnicFocus3 = FocusNode();
+  var mobFocus1 = FocusNode();
+  var mobFocus2 = FocusNode();
+
   String voterMobileNumber, voterNic;
-  RegExp nic = new RegExp(r'^[0-9+]{5}\-+[0-9+]{7}\-+[0-9]{1}$');
-  RegExp mob = new RegExp(r'^[0-9]{4}\-[0-9]{7}$');
+  //RegExp nic = new RegExp(r'^[0-9+]{5}\-+[0-9+]{7}\-+[0-9]{1}$');
+  RegExp nic1 = new RegExp(r'^[0-9+]{5}$');
+  RegExp nic2 = new RegExp(r'^[0-9+]{7}$');
+  RegExp nic3 = new RegExp(r'^[0-9]{1}$');
+  //RegExp mob = new RegExp(r'^[0-9]{4}\-[0-9]{7}$');
+  RegExp mob1 = new RegExp(r'^[0-9]{4}$');
+  RegExp mob2 = new RegExp(r'^[0-9]{7}$');
 
   final formKey = GlobalKey<FormState>();
 
   void saveForm() async {
-    // print(mob.hasMatch('0301-2633416'));
-    // print(exp.hasMatch('42101-0793793-9'));
     try {
       formKey.currentState.save();
 
@@ -85,8 +97,16 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
   @override
   void dispose() {
     // TODO: implement dispose
-    cnicController.dispose();
-    mobController.dispose();
+    cnicController1.dispose();
+    mobController1.dispose();
+    cnicController2.dispose();
+    mobController2.dispose();
+    cnicController3.dispose();
+    cnicFocus1.dispose();
+    cnicFocus2.dispose();
+    cnicFocus3.dispose();
+    mobFocus1.dispose();
+    mobFocus2.dispose();
     super.dispose();
   }
 
@@ -106,6 +126,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                 child: Column(
                   children: <Widget>[
                     Container(
+                      width: mediaquery.size.width,
                       margin: EdgeInsets.only(top: 40),
                       alignment: Alignment.center,
                       child: ClipOval(
@@ -117,6 +138,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                       ),
                     ),
                     Container(
+                        width: mediaquery.size.width,
                         margin: EdgeInsets.only(top: 5),
                         alignment: Alignment.center,
                         child: Text(
@@ -128,6 +150,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                               fontSize: 30),
                         )),
                     Container(
+                        width: mediaquery.size.width,
                         alignment: Alignment.center,
                         child: Text(
                           'Please Login to Vote',
@@ -138,6 +161,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                               fontSize: 22),
                         )),
                     Container(
+                        width: mediaquery.size.width,
                         margin: EdgeInsets.only(top: 20),
                         decoration: BoxDecoration(
                             color: Colors.white,
@@ -152,7 +176,7 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                             Container(
                               alignment: Alignment.topLeft,
                               // color: Colors.green,
-                              margin: EdgeInsets.symmetric(vertical: 18),
+                              margin: EdgeInsets.only(top: 10),
                               child: IconButton(
                                   color: Color.fromRGBO(24, 44, 37, 1),
                                   icon: Icon(Icons.arrow_back),
@@ -166,96 +190,187 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                                   child: Column(
                                     children: <Widget>[
                                       Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: TextFormField(
-                                          controller: cnicController,
-                                          validator: (value) {
-                                            if (!nic.hasMatch(value)) {
-                                              return 'Please Enter Valid Nic Number';
-                                            }
-                                          },
-
-                                          //return value;
-
-                                          maxLength: 15,
-                                          // onChanged: (val) {
-                                          //   if (val.length == 5) {
-                                          //     var txt = val + '-';
-                                          //     cnicController.text = txt;
-                                          //     setState(() {
-                                          //       cnicController.selection =
-                                          //           TextSelection.fromPosition(
-                                          //               TextPosition(
-                                          //                   offset:
-                                          //                       cnicController
-                                          //                           .text
-                                          //                           .length));
-                                          //     });
-
-                                          ///setState(() {});
-                                          //   }
-                                          //   if (val.length == 13) {
-                                          //     var txt2 = val + '-';
-                                          //     cnicController.text = txt2;
-                                          //     setState(() {
-                                          //       cnicController.selection =
-                                          //           TextSelection.fromPosition(
-                                          //               TextPosition(
-                                          //                   offset:
-                                          //                       cnicController
-                                          //                           .text
-                                          //                           .length));
-                                          //     });
-                                          //   }
-                                          // },
-                                          keyboardType: TextInputType.phone,
-                                          decoration: InputDecoration(
-                                              hintText: 'Enter Your CNIC',
-                                              hintStyle:
-                                                  TextStyle(fontSize: 20)),
-                                          onSaved: (value) {
-                                            voterNic = value;
-                                          },
-                                        ),
+                                          alignment: Alignment.centerLeft,
+                                          margin: EdgeInsets.only(left: 5),
+                                          child: Text(
+                                            'CNIC:',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: mediaquery.size.width * 0.2,
+                                            margin: EdgeInsets.only(left: 5),
+                                            child: TextFormField(
+                                              controller: cnicController1,
+                                              autofocus: true,
+                                              validator: (value) {
+                                                if (!nic1.hasMatch(value)) {
+                                                  return 'Please Enter Valid CNIC Number';
+                                                }
+                                              },
+                                              maxLength: 5,
+                                              keyboardType: TextInputType.phone,
+                                              decoration: InputDecoration(
+                                                counterText: "",
+                                              ),
+                                              onChanged: (val) {
+                                                if (val.length == 5) {
+                                                  cnicFocus2.requestFocus();
+                                                }
+                                              },
+                                              onSaved: (value) {
+                                                voterNic = value+'-';
+                                              },
+                                            ),
+                                          ),
+                                          Container(
+                                              width:
+                                                  mediaquery.size.width * 0.05,
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                '-',
+                                                style: TextStyle(fontSize: 30),
+                                              )),
+                                          Container(
+                                            width: mediaquery.size.width * 0.4,
+                                            child: TextFormField(
+                                              focusNode: cnicFocus2,
+                                              controller: cnicController2,
+                                              validator: (value) {
+                                                if (!nic2.hasMatch(value)) {
+                                                  return 'Please Enter Valid CNIC Number';
+                                                }
+                                              },
+                                              onChanged: (val) {
+                                                if (val.length == 7) {
+                                                  cnicFocus3.requestFocus();
+                                                }
+                                              },
+                                              maxLength: 7,
+                                              keyboardType: TextInputType.phone,
+                                              decoration: InputDecoration(
+                                                counterText: "",
+                                              ),
+                                              onSaved: (value) {
+                                                voterNic = voterNic + value+'-';
+                                              },
+                                            ),
+                                          ),
+                                          Container(
+                                              width:
+                                                  mediaquery.size.width * 0.05,
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                '-',
+                                                style: TextStyle(fontSize: 30),
+                                              )),
+                                          Container(
+                                            width: mediaquery.size.width * 0.2,
+                                            margin: EdgeInsets.only(left: 5),
+                                            child: TextFormField(
+                                                focusNode: cnicFocus3,
+                                                controller: cnicController3,
+                                                validator: (value) {
+                                                  if (!nic3.hasMatch(value)) {
+                                                    return 'Please Enter Valid CNIC Number';
+                                                  }
+                                                },
+                                                maxLength: 1,
+                                                keyboardType:
+                                                    TextInputType.phone,
+                                                decoration: InputDecoration(
+                                                  counterText: "",
+                                                ),
+                                                onSaved: (value) {
+                                                  voterNic = voterNic + value;
+                                                  print(voterNic);
+                                                },
+                                                onChanged: (val) {
+                                                  if (val.length == 1) {
+                                                    mobFocus1.requestFocus();
+                                                  }
+                                                }),
+                                          ),
+                                        ],
                                       ),
                                       Container(
-                                        margin: EdgeInsets.all(10),
-                                        child: TextFormField(
-                                          validator: (value) {
-                                            if (!mob.hasMatch(value)) {
-                                              return 'Please Enter Valid Mobile Number';
-                                            }
-                                          },
-                                          maxLength: 12,
-                                          controller: mobController,
-                                          keyboardType: TextInputType.phone,
-                                          decoration: InputDecoration(
-                                              hintText:
-                                                  'Enter Your Mobile Number',
-                                              hintStyle:
-                                                  TextStyle(fontSize: 20)),
-                                          // onChanged: (val) {
-                                          //   if (val.length == 4) {
-                                          //     var txt3 = val + '-';
-                                          //     mobController.text = txt3;
-                                          //     setState(() {
-                                          //       mobController.selection =
-                                          //           TextSelection.fromPosition(
-                                          //               TextPosition(
-                                          //                   offset:
-                                          //                       mobController
-                                          //                           .text
-                                          //                           .length));
-                                          //     });
-                                          //   }
-                                          // },
-                                          onSaved: (value) {
-                                            voterMobileNumber = value;
-                                          },
-                                        ),
+                                          alignment: Alignment.centerLeft,
+                                          margin:
+                                              EdgeInsets.only(left: 5, top: 15),
+                                          child: Text(
+                                            'Mobile Number:',
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )),
+                                      Row(
+                                        children: [
+                                          Container(
+                                            width: mediaquery.size.width * 0.2,
+                                            margin: EdgeInsets.only(left: 5),
+                                            child: TextFormField(
+                                                focusNode: mobFocus1,
+                                                validator: (value) {
+                                                  if (!mob1.hasMatch(value)) {
+                                                    return 'Please Enter Valid Mobile Number';
+                                                  }
+                                                },
+                                                maxLength: 4,
+                                                controller: mobController1,
+                                                keyboardType:
+                                                    TextInputType.phone,
+                                                decoration: InputDecoration(
+                                                  counterText: "",
+                                                ),
+                                                onSaved: (value) {
+                                                  voterMobileNumber = value+'-';
+                                                },
+                                                onChanged: (val) {
+                                                  if (val.length == 4) {
+                                                    mobFocus2.requestFocus();
+                                                  }
+                                                }),
+                                          ),
+                                          Container(
+                                              width:
+                                                  mediaquery.size.width * 0.1,
+                                              alignment: Alignment.center,
+                                              child: Text(
+                                                '-',
+                                                style: TextStyle(fontSize: 30),
+                                              )),
+                                          Container(
+                                            width: mediaquery.size.width * 0.65,
+                                            //margin: EdgeInsets.only(right: 5),
+                                            child: TextFormField(
+                                              focusNode: mobFocus2,
+                                              validator: (value) {
+                                                if (!mob2.hasMatch(value)) {
+                                                  return 'Please Enter Valid Mobile Number';
+                                                }
+                                              },
+                                              maxLength: 7,
+                                              controller: mobController2,
+                                              keyboardType: TextInputType.phone,
+                                              decoration: InputDecoration(
+                                                counterText: "",
+                                              ),
+                                              onSaved: (value) {
+                                                voterMobileNumber =
+                                                    voterMobileNumber + value;
+                                                print(voterMobileNumber);
+                                              },
+                                            ),
+                                          ),
+                                        ],
                                       ),
                                       Container(
-                                        margin: EdgeInsets.only(top: 10),
+                                        margin: EdgeInsets.only(top: 20),
                                         height: 50,
                                         decoration: BoxDecoration(
                                           color: Color.fromRGBO(24, 44, 37, 1),

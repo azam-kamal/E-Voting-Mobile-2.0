@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
           ChangeNotifierProvider.value(value: VoterProvider()),
         ],
         child: MaterialApp(
+          title: 'E Voting',
           routes: {
             VoterAuthScreen.routeName: (ctx) => VoterAuthScreen(),
             VoterDetailScreen.routeName: (ctx) => VoterDetailScreen(),

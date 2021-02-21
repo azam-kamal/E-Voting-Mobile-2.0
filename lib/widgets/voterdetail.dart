@@ -1,31 +1,30 @@
 import '../screens/voterdetailscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
-import 'package:geolocator/geolocator.dart';
-import 'package:geocoder/geocoder.dart';
+import '../screens/selectOption.dart';
 
 class VoterDetail extends StatefulWidget {
   final int id;
-  
-
+  final int pollingStationId;
   final String name;
   final String nicNumber;
   final String mobileNumber;
   final String address;
   final String city;
   final String province;
-  final String halkaNumber;
+  final String pollingStationNumber;
   final double longitude;
   final double latitude;
   VoterDetail(
       this.id,
+      this.pollingStationId,
       this.name,
       this.nicNumber,
       this.mobileNumber,
       this.address,
       this.city,
       this.province,
-      this.halkaNumber,
+      this.pollingStationNumber,
       this.longitude,
       this.latitude);
   @override
@@ -53,7 +52,7 @@ class _VoterDetailState extends State<VoterDetail> {
           markerId: MarkerId('M1'),
           position: LatLng(widget.latitude, widget.longitude)));
     }
-    init=false;
+    init = false;
     super.didChangeDependencies();
   }
 
@@ -81,7 +80,7 @@ class _VoterDetailState extends State<VoterDetail> {
               child: Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(right: 20,left: 6),
+                    padding: EdgeInsets.only(right: 20, left: 6),
                     child: Icon(
                       Icons.account_circle,
                       size: 30,
@@ -106,7 +105,7 @@ class _VoterDetailState extends State<VoterDetail> {
             child: Row(
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(right: 20,left: 6),
+                  padding: EdgeInsets.only(right: 20, left: 6),
                   child: Icon(
                     Icons.call,
                     size: 30,
@@ -132,7 +131,7 @@ class _VoterDetailState extends State<VoterDetail> {
             child: Row(
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(right: 20,left: 6),
+                  padding: EdgeInsets.only(right: 20, left: 6),
                   child: Icon(
                     Icons.beenhere,
                     size: 30,
@@ -158,7 +157,7 @@ class _VoterDetailState extends State<VoterDetail> {
             child: Row(
               children: <Widget>[
                 Padding(
-                    padding: EdgeInsets.only(right: 20,left: 6),
+                  padding: EdgeInsets.only(right: 20, left: 6),
                   child: Icon(
                     Icons.home,
                     size: 30,
@@ -184,7 +183,7 @@ class _VoterDetailState extends State<VoterDetail> {
               child: Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(right: 20,left: 6),
+                    padding: EdgeInsets.only(right: 20, left: 6),
                     child: Icon(
                       Icons.how_to_vote,
                       size: 30,
@@ -192,7 +191,7 @@ class _VoterDetailState extends State<VoterDetail> {
                     ),
                   ),
                   Expanded(
-                      child: Text(widget.halkaNumber,
+                      child: Text(widget.pollingStationNumber,
                           style: TextStyle(
                             //fontFamily: 'josefin',
                             fontWeight: FontWeight.w700,
@@ -204,15 +203,15 @@ class _VoterDetailState extends State<VoterDetail> {
             )),
 
 /////
-///
-Container(
+        ///
+        Container(
             margin: EdgeInsets.only(top: 2),
             child: Card(
               elevation: 3,
               child: Row(
                 children: <Widget>[
                   Padding(
-                    padding: EdgeInsets.only(right: 20,left: 6),
+                    padding: EdgeInsets.only(right: 20, left: 6),
                     child: Icon(
                       Icons.location_on,
                       size: 30,
@@ -220,33 +219,33 @@ Container(
                     ),
                   ),
                   Expanded(
-                      child: Text("You can see your Polling Station marked on Map",
-                          style: TextStyle(
-                            //fontFamily: 'josefin',
-                            fontWeight: FontWeight.w700,
-                            color: Color.fromRGBO(65, 91, 85, 1),
-                            fontSize: 15,
-                          )))
+                      child:
+                          Text("You can see your Polling Station marked on Map",
+                              style: TextStyle(
+                                //fontFamily: 'josefin',
+                                fontWeight: FontWeight.w700,
+                                color: Color.fromRGBO(65, 91, 85, 1),
+                                fontSize: 15,
+                              )))
                 ],
               ),
             )),
 
-
         Container(
           height: 300,
           child: ClipRRect(
-            borderRadius: BorderRadius.circular(15),
+              borderRadius: BorderRadius.circular(15),
               child: GoogleMap(
-            markers: marker.toSet(),
-            mapType: MapType.hybrid,
-            initialCameraPosition: _initialPosition,
-            onMapCreated: (controller) {
-              _controller = controller;
-            },
-          )),
+                markers: marker.toSet(),
+                mapType: MapType.hybrid,
+                initialCameraPosition: _initialPosition,
+                onMapCreated: (controller) {
+                  _controller = controller;
+                },
+              )),
         ),
         Container(
-          margin: EdgeInsets.only(top: 10,bottom: 20,left: 6,right: 6),
+          margin: EdgeInsets.only(top: 10, bottom: 20, left: 6, right: 6),
           height: 50,
           decoration: BoxDecoration(
             color: Color.fromRGBO(24, 44, 37, 1),
@@ -255,8 +254,7 @@ Container(
           ),
           child: FlatButton(
               onPressed: () {
-                Navigator.of(context)
-                    .pushNamed(VoterDetailScreen.routeName);
+                Navigator.of(context).pushNamed(SelectOptionScreen.routeName);
               },
               child: Text(
                 'Next',

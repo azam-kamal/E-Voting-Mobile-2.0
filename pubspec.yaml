@@ -43,6 +43,8 @@ dev_dependencies:
   geolocator: ^3.0.0
   flutter_google_places: ^0.2.6
   geocoder: ^0.2.1
+  smart_select: ^4.3.2
+  local_auth_device_credentials: ^0.6.3+10
   
 
 
@@ -64,6 +66,9 @@ flutter:
     - assets/images/Logo 2.0.png
     - assets/images/Logo 3.0.png
     - assets/images/otplogo.jpg
+    - assets/images/national.jpg
+    - assets/images/provincial.png
+
 
   #   - images/a_dot_ham.jpeg
 

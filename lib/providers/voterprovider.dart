@@ -73,7 +73,7 @@ class VoterProvider with ChangeNotifier {
       Voter voter, String markerID, String longitude, String latitude) async {
     try {
       final response = await http
-          .post('http://192.168.1.105:3000/voters/register', headers: {
+          .post('https://a570b23061dd.ngrok.io/voters/register', headers: {
         "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
       }, body: {
         'voter_name': voter.voterName,
@@ -82,7 +82,7 @@ class VoterProvider with ChangeNotifier {
         'voter_province': voter.voterProvince,
         'voter_city': voter.votercityName,
         'voter_address': voter.voterAddress,
-        'voter_halka_number': voter.voterHalkaNumber,
+        'voter_halka_number': voter.voterPollingStationNumber,
         'voter_national_assembly_vote_cast': '0',
         'voter_provincial_assembly_vote_cast': '0',
         'longitude': longitude,
@@ -111,37 +111,37 @@ class VoterProvider with ChangeNotifier {
   Future<void> loginVoter(String voterNic, String voterEmail) async {
     try {
       final response = await http
-          .post('http://192.168.1.105:3000/voters/login', headers: {
+          .post('https://a570b23061dd.ngrok.io/voters/login', headers: {
         "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
       }, body: {
         'voter_nic': voterNic,
         'voter_mobile_number': voterEmail
       });
+      print(response.body);
+      // print( json.decode(response.body)['voterId']);
       _voterData.add(Voter(
-          voterId: json.decode(response.body)['voterData']['voterId'],
-          voterHalkaLocationMarkerId: 'M1',
-          voterName: json.decode(response.body)['voterData']['voterName'],
-          voterNicNumber: json.decode(response.body)['voterData']['voterNic'],
-          voterMobileNumber: json.decode(response.body)['voterData']
-              ['voterMobileNumber'],
-          voterAddress: json.decode(response.body)['voterData']
-              ['voterProvince'],
-          voterHalkaNumber: json.decode(response.body)['voterData']
-              ['voterCity'],
-          votercityName: json.decode(response.body)['voterData']
-              ['voterHalkaNumber'],
-          voterProvince: json.decode(response.body)['voterData']
-              ['voterProvince'],
-          nationalAssemblyVoteCast: false,
-          provincialAssemblyVoteCast: false,
-          voterHalkaLocationLongitude: double.parse(
-              json.decode(response.body)['voterData']['longitude']),
-          voterHalkaLocationLatitude: double.parse(
-              json.decode(response.body)['voterData']['latitude'])));
-       print(json.decode(response.body));
+          voterId: json.decode(response.body)['voterId'],
+          pollingStationId: json.decode(response.body)['pollingStationId'],
+          voterName: json.decode(response.body)['voterName'],
+          voterNicNumber: json.decode(response.body)['voterNic'],
+          voterMobileNumber: json.decode(response.body)['voterMobileNumber'],
+          voterAddress: json.decode(response.body)['voterProvince'],
+          voterPollingStationNumber: json.decode(response.body)['voterCity'],
+          votercityName: json.decode(response.body)['voterHalkaNumber'],
+          voterProvince: json.decode(response.body)['voterProvince'],
+          nationalAssemblyVoteCast:
+              json.decode(response.body)['voter_national_assembly_vote_cast'],
+          provincialAssemblyVoteCast:
+              json.decode(response.body)['voter_provincial_assembly_vote_cast'],
+          voterPollingStationLocationLongitude:
+              double.parse(json.decode(response.body)['longitude']),
+          voterPollingStationLocationLatitude:
+              double.parse(json.decode(response.body)['latitude'])));
+      // print(json.decode(response.body));
       // print(data);
     } catch (error) {
       print(error);
+      throw Exception('Voter Not Exist');
     }
   }
 }

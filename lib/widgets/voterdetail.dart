@@ -1,3 +1,5 @@
+import 'package:E_Voting_System/providers/voterprovider.dart';
+import 'package:provider/provider.dart';
 import '../screens/voterdetailscreen.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
@@ -254,10 +256,26 @@ class _VoterDetailState extends State<VoterDetail> {
           ),
           child: FlatButton(
               onPressed: () {
-                Navigator.of(context).pushNamed(SelectOptionScreen.routeName);
+                print("Check if voter can cast vote!");
+
+                if (Provider.of<VoterProvider>(context, listen: false)
+                        .voteCast ==
+                    "1") {
+                  print(Provider.of<VoterProvider>(context, listen: false)
+                      .voteCast);
+                  print("You have already casted your vote!");
+                }
+                if (Provider.of<VoterProvider>(context, listen: false)
+                        .voteCast ==
+                    "0") {
+                  print(Provider.of<VoterProvider>(context, listen: false)
+                      .voteCast);
+                  print("not casted yet!");
+                  Navigator.of(context).pushNamed(SelectOptionScreen.routeName);
+                }
               },
               child: Text(
-                'Next',
+                'Vote',
                 style: TextStyle(
                     //fontFamily: 'josefin',
                     fontWeight: FontWeight.w700,

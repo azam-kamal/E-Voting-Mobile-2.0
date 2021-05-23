@@ -1,3 +1,5 @@
+import 'package:E_Voting_System/screens/voterdetailscreen.dart';
+
 import '../providers/voterprovider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -43,13 +45,17 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
           isLoading = true;
         });
 
-        await Provider.of<VoterProvider>(context)
+        await Provider.of<VoterProvider>(context, listen: false)
             .loginVoter(voterNic, voterMobileNumber);
-        if (Provider.of<VoterProvider>(context).voterItems.length == 0) {
+        if (Provider.of<VoterProvider>(context, listen: false)
+                .voterItems
+                .length ==
+            0) {
           return;
         } else
           isLoading = false;
-        Navigator.of(context).pushReplacementNamed(OtpFirebaseScreen.routeName);
+        //Navigator.of(context).pushReplacementNamed(OtpFirebaseScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(VoterDetailScreen.routeName);
       }
     } catch (error) {
       showDialog(

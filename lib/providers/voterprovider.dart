@@ -1,79 +1,54 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 import '../models/voter.dart';
+import '../firebase/database.dart';
 
 class VoterProvider with ChangeNotifier {
+  String baseIp;
+  String party1;
+  String party2;
+  String candidate1;
+  String candidate2;
+  String pollStation;
+  String voteCast;
+  String voterProvince;
+
   List<Voter> _voterData = [];
   List<Voter> get voterItems {
     return [..._voterData];
   }
+  /////Valuess uthani hen!!!!!!!!
 
-  // final String nicNumber;
-  // VoterProvider(this.nicNumber);
-  // Future<void> signupVoter(
-  //     String nicNumber, String mobileNumber, String userId, var date) async {
-  //   const url = 'https://election-system-database.firebaseio.com/auth.json';
-  //   try {
-  //     final reponseData = await http.post(url,
-  //         body: json.encode({
-  //           'VoterId': userId,
-  //           'VoterNicNumber': nicNumber,
-  //           'VoterMobileNumber': mobileNumber,
-  //           'VoterExpiryDate': date
-  //         }));
-  //     notifyListeners();
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
+  dataForNational(String val, String cand) {
+    //String poll = pollStation;
+    party1 = val;
+    candidate1 = cand;
+  }
+
+  dataForProvincial(String val, String cand) {
+    //String poll = pollStation;
+    party2 = val;
+    candidate2 = cand;
+  }
+
+  Future<String> getIp() async {
+    DocumentSnapshot sp = await DatabaseMethods().getIP();
+    baseIp = sp.data["ip"];
+    return baseIp;
+  }
 
   Future<void> logoutVoterDetail() async {
     _voterData = [];
     notifyListeners();
   }
 
-  // Future<void> fetchVoter() async {
-  //   print('we get voter id' + nicNumber);
-  //   // final url =
-  //   //     'https://election-system-database.firebaseio.com/voters/$voterId.json';
-  //   final url =
-  //       'https://election-system-database.firebaseio.com/voters.json?&orderBy="VoterNicNumber"&equalTo="$nicNumber"';
-  //   try {
-  //     final responseData = await http.get(url);
-  //     final extractedData =
-  //         await json.decode(responseData.body) as Map<String, dynamic>;
-
-  //     print(json.decode(responseData.body));
-  //     // final List<Voter> loadData = [];
-  //     extractedData.forEach((key, value) {
-  //       _voterData.add(Voter(
-  //           voterId: key,
-  //           voterHalkaLocationMarkerId: value['VoterHalkaLocationMarkerId'],
-  //           votercityName: value['VoterCity'],
-  //           voterProvince: value['VoterProvince'],
-  //           voterNicNumber: value['VoterNicNumber'],
-  //           voterName: value['VoterName'],
-  //           voterMobileNumber: value['VoterMobileNumber'],
-  //           voterAddress: value['VoterAddress'],
-  //           voterHalkaNumber: value['VoterHalkaNumber'],
-  //           nationalAssemblyVoteCast: value['NationalAssemblyVoteCast'],
-  //           provincialAssemblyVoteCast: value['ProvincialAssemblyVoteCast'],
-  //           voterHalkaLocationLongitude: double.parse(value['Longitude']),
-  //           voterHalkaLocationLatitude: double.parse(value['Latitude'])));
-  //     });
-  //     // voterData = loadData;
-  //     notifyListeners();
-  //   } catch (error) {
-  //     throw error;
-  //   }
-  // }
-
   Future<void> registerVoter(
       Voter voter, String markerID, String longitude, String latitude) async {
+    baseIp = await getIp();
     try {
-      final response = await http
-          .post('https://a570b23061dd.ngrok.io/voters/register', headers: {
+      final response = await http.post('$baseIp/voters/register', headers: {
         "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
       }, body: {
         'voter_name': voter.voterName,
@@ -88,19 +63,6 @@ class VoterProvider with ChangeNotifier {
         'longitude': longitude,
         'latitude': latitude
       });
-
-      // _voterData.add(Voter(
-      //     voterId: json.decode(response.body)['name'],
-      //     voterHalkaLocationMarkerId: markerID,
-      //     votercityName: voter.votercityName,
-      //     voterProvince: voter.voterProvince,
-      //     voterName: voter.voterName,
-      //     voterNicNumber: voter.voterNicNumber,
-      //     voterMobileNumber: voter.voterMobileNumber,
-      //     voterAddress: voter.voterAddress,
-      //     voterHalkaNumber: voter.voterHalkaNumber,
-      //     voterHalkaLocationLongitude: double.parse(longitude),
-      //     voterHalkaLocationLatitude: double.parse(latitude)));
       notifyListeners();
     } catch (error) {
       print(error);
@@ -109,16 +71,15 @@ class VoterProvider with ChangeNotifier {
   }
 
   Future<void> loginVoter(String voterNic, String voterEmail) async {
+    baseIp = await getIp();
     try {
-      final response = await http
-          .post('https://a570b23061dd.ngrok.io/voters/login', headers: {
+      final response = await http.post('$baseIp/voters/login', headers: {
         "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
       }, body: {
         'voter_nic': voterNic,
         'voter_mobile_number': voterEmail
       });
       print(response.body);
-      // print( json.decode(response.body)['voterId']);
       _voterData.add(Voter(
           voterId: json.decode(response.body)['voterId'],
           pollingStationId: json.decode(response.body)['pollingStationId'],
@@ -137,11 +98,181 @@ class VoterProvider with ChangeNotifier {
               double.parse(json.decode(response.body)['longitude']),
           voterPollingStationLocationLatitude:
               double.parse(json.decode(response.body)['latitude'])));
-      // print(json.decode(response.body));
-      // print(data);
+
+      pollStation =
+          json.decode(response.body)['voterPollingStationNumber'].toString();
+      voteCast = json
+          .decode(response.body)['voterNationalAssemblyVoteCast']
+          .toString();
+      voterProvince = json.decode(response.body)['voterProvince'].toString();
+      print(pollStation);
+      print(voteCast);
+      //voteCast = int.parse(voteCast);
     } catch (error) {
       print(error);
       throw Exception('Voter Not Exist');
     }
   }
+
+  ////////////////////////////////////////////////////////////////////////////
+  Future<String> getCandidate1(String poll, String party, String rep) async {
+    print(poll);
+    print(party);
+    print(rep);
+    print("CHECKKKK");
+    baseIp = await getIp();
+    try {
+      final response =
+          await http.post('$baseIp/voters/voteNationalAssembly', headers: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      }, body: {
+        'pollingStationNumber': poll,
+        'party': party,
+        'representation': rep
+      });
+      print(response.body);
+
+      return json.decode(response.body)['candidate_name'].toString();
+      //voteCast = int.parse(voteCast);
+    } catch (error) {
+      print(error);
+      throw Exception('Voter Not Exist');
+    }
+  }
+
+  ////////////////////////////////////////////////////////////////////////////
+  Future<String> getCandidate2(String poll, String party, String rep) async {
+    print(poll);
+    print(party);
+    print(rep);
+    print("CHECKKKK");
+    baseIp = await getIp();
+    try {
+      final response =
+          await http.post('$baseIp/voters/voteProvincialAssembly', headers: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      }, body: {
+        'pollingStationNumber': poll,
+        'party': party,
+        'representation': rep
+      });
+      print(response.body);
+
+      return json.decode(response.body)['candidate_name'].toString();
+      //voteCast = int.parse(voteCast);
+    } catch (error) {
+      print(error);
+      throw Exception('Voter Not Exist');
+    }
+  }
+
+////////////////////////////////////////////////////////////////////////////
+  Future<String> voteToNational(String cand, String party, String poll) async {
+  
+    baseIp = await getIp();
+    try {
+      final response =
+          await http.post('$baseIp/voters/NationalAssemlyCandidateVoteRegistered', headers: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      }, body: {
+        'candidateName': cand,
+        'party': party,
+        'pollingStationNumber': poll
+      });
+      print(response.body);
+
+      return json.decode(response.body)['candidate_name'].toString();
+      //voteCast = int.parse(voteCast);
+    } catch (error) {
+      print(error);
+      throw Exception('Voter Not Exist');
+    }
+  }
+  Future<String> voteToSindh(String cand, String party, String poll) async {
+  
+    baseIp = await getIp();
+    try {
+      final response =
+          await http.post('$baseIp/voters/voteForSindhProvince', headers: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      }, body: {
+        'candidateName': cand,
+        'party': party,
+        'pollingStationNumber': poll
+      });
+      print(response.body);
+
+      return json.decode(response.body)['candidate_name'].toString();
+      //voteCast = int.parse(voteCast);
+    } catch (error) {
+      print(error);
+      throw Exception('Voter Not Exist');
+    }
+  }
+  Future<String> voteToPunjab(String cand, String party, String poll) async {
+  
+    baseIp = await getIp();
+    try {
+      final response =
+          await http.post('$baseIp/voters/voteForPunjabProvince', headers: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      }, body: {
+        'candidateName': cand,
+        'party': party,
+        'pollingStationNumber': poll
+      });
+      print(response.body);
+
+      return json.decode(response.body)['candidate_name'].toString();
+      //voteCast = int.parse(voteCast);
+    } catch (error) {
+      print(error);
+      throw Exception('Voter Not Exist');
+    }
+  }
+
+Future<String> voteToBaluchistan(String cand, String party, String poll) async {
+  
+    baseIp = await getIp();
+    try {
+      final response =
+          await http.post('$baseIp/voters/voteForBaluchistanProvince', headers: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      }, body: {
+        'candidateName': cand,
+        'party': party,
+        'pollingStationNumber': poll
+      });
+      print(response.body);
+
+      return json.decode(response.body)['candidate_name'].toString();
+      //voteCast = int.parse(voteCast);
+    } catch (error) {
+      print(error);
+      throw Exception('Voter Not Exist');
+    }
+  }
+Future<String> voteToKPK(String cand, String party, String poll) async {
+  
+    baseIp = await getIp();
+    try {
+      final response =
+          await http.post('$baseIp/voters/voteForKPKProvince', headers: {
+        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+      }, body: {
+        'candidateName': cand,
+        'party': party,
+        'pollingStationNumber': poll
+      });
+      print(response.body);
+
+      return json.decode(response.body)['candidate_name'].toString();
+      //voteCast = int.parse(voteCast);
+    } catch (error) {
+      print(error);
+      throw Exception('Voter Not Exist');
+    }
+  }
+
+
 }

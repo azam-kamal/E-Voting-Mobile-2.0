@@ -6,6 +6,8 @@ import 'package:local_auth_device_credentials/error_codes.dart';
 import 'package:local_auth_device_credentials/local_auth.dart';
 import 'package:provider/provider.dart';
 
+import 'voterauthscreen.dart';
+
 class VerifyScreen extends StatefulWidget {
   static const routeName = '/verifyScreen';
 
@@ -30,6 +32,7 @@ class _VerifyScreenState extends State<VerifyScreen> {
   String candidate1 = "loading...";
   String candidate2 = "loading...";
   bool isLoading = false;
+  bool isVoted = false;
   @override
   void initState() {
     super.initState();
@@ -113,8 +116,49 @@ class _VerifyScreenState extends State<VerifyScreen> {
               party2,
               Provider.of<VoterProvider>(context, listen: false).pollStation);
         }
+        print("VOTER IDDDD :" +
+            Provider.of<VoterProvider>(context, listen: false).voterId);
+        await Provider.of<VoterProvider>(context, listen: false).voterStatus(
+            Provider.of<VoterProvider>(context, listen: false).voterId);
       }
       if (_authorized == 'Not Authorized') {
+        showDialog(
+            context: context,
+            builder: (ctx) {
+              return AlertDialog(
+                content: Text(
+                    'Error occurred while casting your vote\n Please try again or contact admin in your polling Station'),
+                actions: <Widget>[
+                  Container(
+                    margin: EdgeInsets.only(top: 10),
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: Colors.green[700],
+                      border: Border.all(
+                          color: Colors.black,
+                          style: BorderStyle.solid,
+                          width: 2.0),
+                      borderRadius: BorderRadius.circular(40),
+                    ),
+                    child: FlatButton(
+                        onPressed: () {
+                          Navigator.of(ctx).pop(false);
+                          setState(() {
+                            isLoading = false;
+                          });
+                        },
+                        child: Text(
+                          'okay',
+                          style: TextStyle(
+                              //fontFamily: 'josefin',
+                              color: Colors.white,
+                              fontWeight: FontWeight.w700,
+                              fontSize: 15),
+                        )),
+                  ),
+                ],
+              );
+            });
         print("Error occurred while casting your vote");
       }
       setState(() {
@@ -158,31 +202,53 @@ class _VerifyScreenState extends State<VerifyScreen> {
   @override
   Widget build(BuildContext context) {
     var mediaquery = MediaQuery.of(context);
-    return SafeArea(
-      child: Scaffold(
-          appBar: AppBar(
-            title: Text("Vote Cast"),
-            automaticallyImplyLeading: true,
-            leading: IconButton(
-              icon: Icon(Icons.arrow_back),
-              onPressed: () {
-                Navigator.pop(context);
+    return Scaffold(
+        appBar: AppBar(
+          actions: <Widget>[
+            IconButton(
+              icon: Icon(Icons.logout),
+              onPressed: () async {
+                // init = true;
+                setState(() {
+                  isLoading = true;
+                });
+
+                await Provider.of<VoterProvider>(context, listen: false)
+                    .logoutVoterDetail();
+                Future.delayed(Duration(seconds: 2)).then((value) {
+                  setState(() {
+                    isLoading = false;
+                    Navigator.of(context)
+                        .pushReplacementNamed(VoterAuthScreen.routeName);
+                  });
+                });
+                //Navigator.of(context).pushReplacementNamed('/');
               },
-            ),
-            backgroundColor: Color.fromRGBO(24, 44, 37, 1),
+            )
+          ],
+          title: Text("Vote Cast"),
+          automaticallyImplyLeading: true,
+          leading: IconButton(
+            icon: Icon(Icons.arrow_back),
+            onPressed: () {
+              Navigator.pop(context);
+            },
           ),
-          body: isLoading
-              ? Center(child: CircularProgressIndicator())
-              : Center(
-                  child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text("Authenticate to Cast Your Vote!",
-                        style: TextStyle(fontSize: 18)),
-                    SizedBox(height: 60),
-                    InkWell(
-                      onTap: () {
+          backgroundColor: Color.fromRGBO(24, 44, 37, 1),
+        ),
+        body: isLoading
+            ? Center(child: CircularProgressIndicator())
+            : Center(
+                child: Column(
+                crossAxisAlignment: CrossAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  Text("Authenticate to Cast Your Vote!",
+                      style: TextStyle(fontSize: 18)),
+                  SizedBox(height: 60),
+                  InkWell(
+                    onTap: () {
+                      if (isVoted == false) {
                         setState(() {
                           isLoading = true;
                           party1 =
@@ -202,74 +268,112 @@ class _VerifyScreenState extends State<VerifyScreen> {
                                   .candidate2;
                           isLoading = false;
                         });
-
                         _authenticate();
+                        isVoted = true;
+                      }
+                      if (isVoted == true) {
+                        showDialog(
+          context: context,
+          builder: (ctx) {
+            return AlertDialog(
+              content: Text('You have casted your vote!'),
+              actions: <Widget>[
+                Container(
+                  margin: EdgeInsets.only(top: 10),
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: Colors.green[700],
+                    border: Border.all(
+                        color: Colors.black,
+                        style: BorderStyle.solid,
+                        width: 2.0),
+                    borderRadius: BorderRadius.circular(40),
+                  ),
+                  child: FlatButton(
+                      onPressed: () {
+                        Navigator.of(ctx).pop(false);
+                        setState(() {
+                          isLoading = false;
+                        });
                       },
-                      child: CircleAvatar(
-                        backgroundColor: Colors.transparent,
-                        radius: 35,
-                        child: FittedBox(
-                            child: Image.asset('assets/images/finger.png')),
-                      ),
+                      child: Text(
+                        'okay',
+                        style: TextStyle(
+                            //fontFamily: 'josefin',
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15),
+                      )),
+                ),
+              ],
+            );
+          });
+                      }
+                    },
+                    child: CircleAvatar(
+                      backgroundColor: Colors.transparent,
+                      radius: 35,
+                      child: FittedBox(
+                          child: Image.asset('assets/images/finger.png')),
                     ),
-                    SizedBox(height: 30),
-                    _authorized == "Authorized"
-                        ? SingleChildScrollView(
-                            child: Column(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text(
-                                  "Your Vote has being casted!",
-                                  style: TextStyle(
-                                      fontSize: 18, color: Colors.green[900]),
-                                ),
-                                Card(
-                                    elevation: 6,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "National Assembly ",
+                  ),
+                  SizedBox(height: 30),
+                  _authorized == "Authorized"
+                      ? SingleChildScrollView(
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            crossAxisAlignment: CrossAxisAlignment.center,
+                            children: [
+                              Text(
+                                "Your Vote has being casted!",
+                                style: TextStyle(
+                                    fontSize: 18, color: Colors.green[900]),
+                              ),
+                              Card(
+                                  elevation: 6,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "National Assembly ",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.green[900]),
+                                      ),
+                                      Text("Candidate: " + candidate1,
                                           style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.green[900]),
-                                        ),
-                                        Text("Candidate: " + candidate1,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black)),
-                                        Text('Party: ' + party1,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black))
-                                      ],
-                                    )),
-                                Card(
-                                    elevation: 6,
-                                    child: Column(
-                                      children: [
-                                        Text(
-                                          "Provincial Assembly ",
+                                              fontSize: 14,
+                                              color: Colors.black)),
+                                      Text('Party: ' + party1,
                                           style: TextStyle(
-                                              fontSize: 18,
-                                              color: Colors.green[900]),
-                                        ),
-                                        Text("Candidate: " + candidate2,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black)),
-                                        Text('Party: ' + party2,
-                                            style: TextStyle(
-                                                fontSize: 14,
-                                                color: Colors.black))
-                                      ],
-                                    ))
-                              ],
-                            ),
-                          )
-                        : Container()
-                  ],
-                ))),
-    );
+                                              fontSize: 14,
+                                              color: Colors.black))
+                                    ],
+                                  )),
+                              Card(
+                                  elevation: 6,
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        "Provincial Assembly ",
+                                        style: TextStyle(
+                                            fontSize: 18,
+                                            color: Colors.green[900]),
+                                      ),
+                                      Text("Candidate: " + candidate2,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black)),
+                                      Text('Party: ' + party2,
+                                          style: TextStyle(
+                                              fontSize: 14,
+                                              color: Colors.black))
+                                    ],
+                                  ))
+                            ],
+                          ),
+                        )
+                      : Container()
+                ],
+              )));
   }
 }

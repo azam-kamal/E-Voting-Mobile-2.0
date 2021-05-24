@@ -12,6 +12,7 @@ class VoterProvider with ChangeNotifier {
   String candidate1;
   String candidate2;
   String pollStation;
+  String voterId;
   String voteCast;
   String voterProvince;
 
@@ -105,6 +106,7 @@ class VoterProvider with ChangeNotifier {
           .decode(response.body)['voterNationalAssemblyVoteCast']
           .toString();
       voterProvince = json.decode(response.body)['voterProvince'].toString();
+      voterId=json.decode(response.body)['voterId'].toString();
       print(pollStation);
       print(voteCast);
       //voteCast = int.parse(voteCast);
@@ -168,17 +170,18 @@ class VoterProvider with ChangeNotifier {
 
 ////////////////////////////////////////////////////////////////////////////
   Future<String> voteToNational(String cand, String party, String poll) async {
-  
     baseIp = await getIp();
     try {
-      final response =
-          await http.post('$baseIp/voters/NationalAssemlyCandidateVoteRegistered', headers: {
-        "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
-      }, body: {
-        'candidateName': cand,
-        'party': party,
-        'pollingStationNumber': poll
-      });
+      final response = await http.post(
+          '$baseIp/voters/NationalAssemlyCandidateVoteRegistered',
+          headers: {
+            "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+          },
+          body: {
+            'candidateName': cand,
+            'party': party,
+            'pollingStationNumber': poll
+          });
       print(response.body);
 
       return json.decode(response.body)['candidate_name'].toString();
@@ -188,8 +191,8 @@ class VoterProvider with ChangeNotifier {
       throw Exception('Voter Not Exist');
     }
   }
+
   Future<String> voteToSindh(String cand, String party, String poll) async {
-  
     baseIp = await getIp();
     try {
       final response =
@@ -209,8 +212,8 @@ class VoterProvider with ChangeNotifier {
       throw Exception('Voter Not Exist');
     }
   }
+
   Future<String> voteToPunjab(String cand, String party, String poll) async {
-  
     baseIp = await getIp();
     try {
       final response =
@@ -231,12 +234,12 @@ class VoterProvider with ChangeNotifier {
     }
   }
 
-Future<String> voteToBaluchistan(String cand, String party, String poll) async {
-  
+  Future<String> voteToBaluchistan(
+      String cand, String party, String poll) async {
     baseIp = await getIp();
     try {
-      final response =
-          await http.post('$baseIp/voters/voteForBaluchistanProvince', headers: {
+      final response = await http
+          .post('$baseIp/voters/voteForBaluchistanProvince', headers: {
         "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
       }, body: {
         'candidateName': cand,
@@ -252,8 +255,8 @@ Future<String> voteToBaluchistan(String cand, String party, String poll) async {
       throw Exception('Voter Not Exist');
     }
   }
-Future<String> voteToKPK(String cand, String party, String poll) async {
-  
+
+  Future<String> voteToKPK(String cand, String party, String poll) async {
     baseIp = await getIp();
     try {
       final response =
@@ -274,5 +277,25 @@ Future<String> voteToKPK(String cand, String party, String poll) async {
     }
   }
 
+  ///////////////////////////////////////////////////////////////////////////
+  Future<String> voterStatus(String id) async {
+    baseIp = await getIp();
+    try {
+      final response = await http.post(
+          '$baseIp/voters/UpdateVoterVote',
+          headers: {
+            "content-type": "application/x-www-form-urlencoded; charset=UTF-8",
+          },
+          body: {
+            'voterid': id,
+          });
+      print(response.body);
 
+      //return json.decode(response.body)['candidate_name'].toString();
+      //voteCast = int.parse(voteCast);
+    } catch (error) {
+      print(error);
+      throw Exception('Voter Not Exist');
+    }
+  }
 }

@@ -54,15 +54,15 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
           return;
         } else
           isLoading = false;
-        //Navigator.of(context).pushReplacementNamed(OtpFirebaseScreen.routeName);
-        Navigator.of(context).pushReplacementNamed(VoterDetailScreen.routeName);
+        Navigator.of(context).pushReplacementNamed(OtpFirebaseScreen.routeName);
+        //Navigator.of(context).pushReplacementNamed(VoterDetailScreen.routeName);
       }
     } catch (error) {
       showDialog(
           context: context,
           builder: (ctx) {
             return AlertDialog(
-              content: Text('Invalid Nic number & mobile number'),
+              content: Text('Invalid CNIC number Or mobile number'),
               actions: <Widget>[
                 Container(
                   margin: EdgeInsets.only(top: 10),
@@ -83,9 +83,9 @@ class _VoterAuthScreenState extends State<VoterAuthScreen> {
                         });
                       },
                       child: Text(
-                        'Okay',
+                        'okay',
                         style: TextStyle(
-                            fontFamily: 'josefin',
+                            //fontFamily: 'josefin',
                             color: Colors.white,
                             fontWeight: FontWeight.w700,
                             fontSize: 15),

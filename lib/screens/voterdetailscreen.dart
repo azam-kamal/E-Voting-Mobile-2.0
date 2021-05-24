@@ -27,7 +27,7 @@ class _VoterDetailScreenState extends State<VoterDetailScreen> {
                   isLoading = true;
                 });
             
-                await Provider.of<VoterProvider>(context).logoutVoterDetail();
+                await Provider.of<VoterProvider>(context,listen: false).logoutVoterDetail();
                 Future.delayed(Duration(seconds: 2)).then((value) {
                   setState(() {
                     isLoading = false;

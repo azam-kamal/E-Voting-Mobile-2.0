@@ -98,7 +98,7 @@ class _OtpFirebaseScreenState extends State<OtpFirebaseScreen> {
                 isLoading = true;
               });
 
-              await Provider.of<VoterProvider>(context).logoutVoterDetail();
+              await Provider.of<VoterProvider>(context,listen: false).logoutVoterDetail();
               Future.delayed(Duration(seconds: 2)).then((value) {
                 isLoading = false;
                 Navigator.of(context)
